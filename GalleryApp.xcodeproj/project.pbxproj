@@ -16,6 +16,7 @@
 		E94674F92B927F2100D2DB92 /* GalleryAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94674F82B927F2100D2DB92 /* GalleryAppTests.swift */; };
 		E94675032B927F2100D2DB92 /* GalleryAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94675022B927F2100D2DB92 /* GalleryAppUITests.swift */; };
 		E94675052B927F2100D2DB92 /* GalleryAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94675042B927F2100D2DB92 /* GalleryAppUITestsLaunchTests.swift */; };
+		E94675122B92803800D2DB92 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E94675112B92803800D2DB92 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		E94674FE2B927F2100D2DB92 /* GalleryAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GalleryAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E94675022B927F2100D2DB92 /* GalleryAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryAppUITests.swift; sourceTree = "<group>"; };
 		E94675042B927F2100D2DB92 /* GalleryAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E94675112B92803800D2DB92 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		E94674D52B927F1F00D2DB92 = {
 			isa = PBXGroup;
 			children = (
+				E94675112B92803800D2DB92 /* README.md */,
 				E94674E02B927F1F00D2DB92 /* GalleryApp */,
 				E94674F72B927F2100D2DB92 /* GalleryAppTests */,
 				E94675012B927F2100D2DB92 /* GalleryAppUITests */,
@@ -233,6 +236,7 @@
 			files = (
 				E94674EE2B927F2000D2DB92 /* LaunchScreen.storyboard in Resources */,
 				E94674EB2B927F2000D2DB92 /* Assets.xcassets in Resources */,
+				E94675122B92803800D2DB92 /* README.md in Resources */,
 				E94674E92B927F1F00D2DB92 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
