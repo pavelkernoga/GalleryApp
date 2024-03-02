@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ImagesGalleryWebServiceProtocol {
-    func fetchImages(completion: @escaping([ImagesResponse]?, FetchError?) -> Void)
+    func fetchImages(completion: @escaping([ImageItem]?, FetchError?) -> Void)
 }

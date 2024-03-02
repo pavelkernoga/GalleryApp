@@ -31,7 +31,7 @@ final class ImagesGalleryViewController: UIViewController {
 
 // MARK: - ImagesGalleryViewProtocol
 extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
-    func showImages(response: [ImagesResponse]) {
+    func showImages(response: [ImageItem]) {
         // TO DO: update collection according to the received model
     }
 

@@ -8,6 +8,6 @@
 import Foundation
 
 protocol ImagesGalleryViewProtocol: AnyObject {
-    func showImages(response: [ImagesResponse])
+    func showImages(response: [ImageItem])
     func showError(_ error: FetchError)
 }
