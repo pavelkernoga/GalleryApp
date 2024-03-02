@@ -1,5 +1,5 @@
 //
-//  ImageGalleryPresenter.swift
+//  ImagesGalleryPresenter.swift
 //  GalleryApp
 //
 //  Created by pavel on 2.03.24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ImageGalleryPresenter: ImagesGalleryPresenterProtocol {
+class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     
     private var webService: ImagesGalleryWebServiceProtocol
     private weak var delegate: ImagesGalleryViewProtocol?

@@ -21,8 +21,8 @@ final class ImagesGalleryViewController: UIViewController {
 
     private func setupPresenter() {
         if presenter == nil {
-            let webService = ImageGalleryWebService()
-            presenter = ImageGalleryPresenter(webService: webService, delegate: self)
+            let webService = ImagesGalleryWebService()
+            presenter = ImagesGalleryPresenter(webService: webService, delegate: self)
         }
     }
 }
