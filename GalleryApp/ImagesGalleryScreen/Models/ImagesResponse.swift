@@ -7,15 +7,13 @@
 
 import Foundation
 
-struct ImagesResponse {
-    let id: Int
-    let description: String
-    let urls: Urls
+struct ImageItem: Decodable {
+    let id: String
+    let description: String?
+    let urls: ImageURLs
 }
 
-struct Urls {
+struct ImageURLs: Decodable {
     let full: String
-    let regular: String
-    let small: String
     let thumb: String
 }
