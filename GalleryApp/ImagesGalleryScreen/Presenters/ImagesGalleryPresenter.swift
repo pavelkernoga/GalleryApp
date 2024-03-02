@@ -7,16 +7,18 @@
 
 import Foundation
 
-class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
-    
+final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
+    // MARK: - Private properties
     private var webService: ImagesGalleryWebServiceProtocol
     private weak var delegate: ImagesGalleryViewProtocol?
-    
+
+    // MARK: - Initialization
     required init(webService: ImagesGalleryWebServiceProtocol, delegate: ImagesGalleryViewProtocol) {
         self.webService = webService
         self.delegate = delegate
     }
     
+    // MARK: - Functions
     func showImagesGallery() {
         webService.fetchImages { [weak self] responseImagesModel, error in
             if let error = error {
