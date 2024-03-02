@@ -7,8 +7,7 @@
 
 import Foundation
 
-class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
-    
+final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
     func fetchImages(completion: @escaping ([ImageResponseModel]?, FetchError?) -> Void) {
         // TO DO: setup URLSession
     }

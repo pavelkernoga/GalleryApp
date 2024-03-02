@@ -8,7 +8,6 @@
 import Foundation
 
 protocol ImagesGalleryPresenterProtocol: AnyObject {
-    
     init(webService: ImagesGalleryWebServiceProtocol, delegate: ImagesGalleryViewProtocol)
     
     func showImagesGallery()

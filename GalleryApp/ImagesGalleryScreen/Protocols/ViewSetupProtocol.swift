@@ -14,7 +14,6 @@ protocol ViewSetupProtocol {
 }
 
 extension ViewSetupProtocol {
-
     func buildView() {
         setupHierarchy()
         setupConstraints()
