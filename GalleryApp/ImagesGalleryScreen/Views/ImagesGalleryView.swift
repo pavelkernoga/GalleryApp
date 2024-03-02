@@ -12,16 +12,7 @@ private enum Style {
 }
 
 final class ImagesGalleryView: UIView {
-
-    init() {
-        super.init(frame: .zero)
-        buildView()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
+    // MARK: - Private properties
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
         view.register(ImagesGalleryCell.self, forCellWithReuseIdentifier: "ImageGalleryCell")
@@ -30,6 +21,7 @@ final class ImagesGalleryView: UIView {
         return view
     }()
 
+    // MARK: - Private functions
     private func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -40,10 +32,20 @@ final class ImagesGalleryView: UIView {
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
+
+    // MARK: - Initialization
+    init() {
+        super.init(frame: .zero)
+        buildView()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
+// MARK: - ViewSetupProtocol
 extension ImagesGalleryView: ViewSetupProtocol {
-
     func setupHierarchy() {
         addSubview(collectionView)
     }

@@ -8,10 +8,11 @@
 import UIKit
 
 final class ImagesGalleryViewController: UIViewController {
-
+    // MARK: - Private properties
     private var contentView = ImagesGalleryView()
     private var presenter: ImagesGalleryPresenterProtocol?
 
+    // MARK: - Override
     override func viewDidLoad() {
         super.viewDidLoad()
         view = contentView
@@ -19,6 +20,7 @@ final class ImagesGalleryViewController: UIViewController {
         presenter?.showImagesGallery()
     }
 
+    // MARK: - Private functions
     private func setupPresenter() {
         if presenter == nil {
             let webService = ImagesGalleryWebService()
@@ -27,8 +29,8 @@ final class ImagesGalleryViewController: UIViewController {
     }
 }
 
+// MARK: - ImagesGalleryViewProtocol
 extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
-
     func showImages(response: [ImageResponseModel]) {
         // TO DO: update collection according to the received model
     }
