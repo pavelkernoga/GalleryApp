@@ -98,7 +98,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E92215492B93196500686E41 /* ImageGalleryScreen */ = {
+		E92215492B93196500686E41 /* ImagesGalleryScreen */ = {
 			isa = PBXGroup;
 			children = (
 				E92215602B9343A500686E41 /* Network */,
@@ -107,7 +107,7 @@
 				E922154B2B9319AD00686E41 /* Models */,
 				E922154A2B93199B00686E41 /* Views */,
 			);
-			path = ImageGalleryScreen;
+			path = ImagesGalleryScreen;
 			sourceTree = "<group>";
 		};
 		E922154A2B93199B00686E41 /* Views */ = {
@@ -180,7 +180,7 @@
 		E94674E02B927F1F00D2DB92 /* GalleryApp */ = {
 			isa = PBXGroup;
 			children = (
-				E92215492B93196500686E41 /* ImageGalleryScreen */,
+				E92215492B93196500686E41 /* ImagesGalleryScreen */,
 				E94674E12B927F1F00D2DB92 /* AppDelegate.swift */,
 				E94674E32B927F1F00D2DB92 /* SceneDelegate.swift */,
 				E94674EA2B927F2000D2DB92 /* Assets.xcassets */,
