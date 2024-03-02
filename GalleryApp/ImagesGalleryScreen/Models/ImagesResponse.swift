@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ImageResponseModel {
+struct ImagesResponse {
     let id: Int
     let description: String
     let urls: Urls
