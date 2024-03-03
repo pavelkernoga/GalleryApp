@@ -13,10 +13,17 @@ private enum Style {
 
 final class ImagesGalleryView: UIView {
     // MARK: - Private properties
-    private lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
         view.register(ImagesGalleryCell.self, forCellWithReuseIdentifier: "ImageGalleryCell")
         view.backgroundColor = Style.collectionViewBackgroundColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    lazy var loadingView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.hidesWhenStopped = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -25,9 +32,9 @@ final class ImagesGalleryView: UIView {
     private func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 1, leading: 1, bottom: 1, trailing: 1)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.3))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
         let section = NSCollectionLayoutSection(group: group)
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
@@ -47,7 +54,7 @@ final class ImagesGalleryView: UIView {
 // MARK: - ViewSetupProtocol
 extension ImagesGalleryView: ViewSetupProtocol {
     func setupHierarchy() {
-        addSubview(collectionView)
+        addSubviews([collectionView, loadingView])
     }
 
     func setupConstraints() {
@@ -56,6 +63,11 @@ extension ImagesGalleryView: ViewSetupProtocol {
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            loadingView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            loadingView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
 }
