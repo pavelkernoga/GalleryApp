@@ -2,3 +2,8 @@ opt_in_rules:
  - indentation_width
  - explicit_self
  - operator_usage_whitespace
+ - line_length:
+
+disabled_rules:
+  - line_length
+  - trailing_whitespace
