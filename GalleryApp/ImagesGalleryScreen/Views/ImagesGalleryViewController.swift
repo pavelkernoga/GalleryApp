@@ -48,7 +48,12 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
     }
 
     func showError(_ error: FetchError) {
-        // TO DO: show an error message to the user
+        let alert = UIAlertController(title: "Error", message: "Cannot upload photos at this time", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
     }
 }
 
