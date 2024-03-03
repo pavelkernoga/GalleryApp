@@ -12,6 +12,8 @@ final class ImagesGalleryViewController: UIViewController {
     private var contentView = ImagesGalleryView()
     private var presenter: ImagesGalleryPresenterProtocol?
     private var imageItems: [ImageItem] = []
+    private var isPageLoading: Bool = false
+    private var pageToload: Int = 1
 
     // MARK: - Override
     override func viewDidLoad() {
@@ -19,8 +21,9 @@ final class ImagesGalleryViewController: UIViewController {
         view = contentView
         contentView.collectionView.delegate = self
         contentView.collectionView.dataSource = self
+        showLoadingIndicator(true)
         setupPresenter()
-        presenter?.showImagesGallery()
+        presenter?.showImagesGallery(pageToload)
     }
 
     // MARK: - Private functions
@@ -40,18 +43,28 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
         }
     }
 
-    func showImages(response: [ImageItem]) {
-        imageItems = response
+    func updateCollectionView(items: [ImageItem]) {
+        if !imageItems.isEmpty {
+            for item in imageItems {
+                imageItems.append(item)
+            }
+        } else {
+            imageItems = items
+        }
+
         DispatchQueue.main.async {
             self.contentView.collectionView.reloadData()
+            self.isPageLoading = false
+            self.showLoadingIndicator(false)
         }
     }
 
-    func showError(_ error: FetchError) {
+    func showError(error: FetchError) {
         let alert = UIAlertController(title: "Error", message: "Cannot upload photos at this time", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
         
         DispatchQueue.main.async {
+            self.showLoadingIndicator(false)
             self.present(alert, animated: true)
         }
     }
@@ -71,5 +84,14 @@ extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionVie
             cell.imageView.image = image
         })
         return cell
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if contentView.collectionView.isScrolled(),
+           !isPageLoading {
+            isPageLoading = true
+            pageToload = (pageToload + 1)
+            presenter?.loadMoreImages(pageToload)
+        }
     }
 }
