@@ -45,7 +45,7 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
 
     func updateCollectionView(items: [ImageItem]) {
         if !imageItems.isEmpty {
-            for item in imageItems {
+            for item in items {
                 imageItems.append(item)
             }
         } else {
