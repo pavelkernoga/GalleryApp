@@ -20,13 +20,16 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     
     // MARK: - Functions
     func showImagesGallery() {
+        delegate?.showLoading(true)
         webService.fetchImages { [weak self] responseImagesModel, error in
             if let error = error {
+                self?.delegate?.showLoading(false)
                 self?.delegate?.showError(error)
                 return
             }
             
             if let responseImagesModel = responseImagesModel {
+                self?.delegate?.showLoading(false)
                 self?.delegate?.showImages(response: responseImagesModel)
             }
         }
