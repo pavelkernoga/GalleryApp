@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     // MARK: - Private properties
@@ -31,6 +32,16 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
             if let responseImagesModel = responseImagesModel {
                 self?.delegate?.showLoadingIndicator(false)
                 self?.delegate?.showImages(response: responseImagesModel)
+            }
+        }
+    }
+
+    func getCellImage(from imageItem: ImageItem, completion: @escaping (UIImage?) -> Void) {
+        if let url = URL(string: imageItem.urls.regular) {
+            webService.getCellImage(with: url) { image in
+                if let image = image {
+                    completion(image)
+                }
             }
         }
     }
