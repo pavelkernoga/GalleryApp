@@ -1,5 +1,5 @@
 //
-//  ImageResponseModel.swift
+//  ImageItem.swift
 //  GalleryApp
 //
 //  Created by pavel on 2.03.24.
@@ -15,5 +15,5 @@ struct ImageItem: Decodable {
 
 struct ImageURLs: Decodable {
     let full: String
-    let thumb: String
+    let regular: String
 }
