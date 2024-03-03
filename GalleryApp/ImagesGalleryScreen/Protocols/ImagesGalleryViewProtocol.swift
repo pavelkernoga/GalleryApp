@@ -9,6 +9,6 @@ import Foundation
 
 protocol ImagesGalleryViewProtocol: AnyObject {
     func showLoadingIndicator(_ show: Bool)
-    func showImages(response: [ImageItem])
-    func showError(_ error: FetchError)
+    func updateCollectionView(items: [ImageItem])
+    func showError(error: FetchError)
 }
