@@ -9,9 +9,10 @@ import UIKit
 
 final class ImagesGalleryCell: UICollectionViewCell {
     // MARK: - Private properties
-    private var imageView: UIImageView = {
+    var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()

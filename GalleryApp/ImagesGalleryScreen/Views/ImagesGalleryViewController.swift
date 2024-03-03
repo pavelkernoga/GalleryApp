@@ -67,6 +67,9 @@ extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionVie
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageGalleryCell", for: indexPath) as? ImagesGalleryCell else {
             return UICollectionViewCell()
         }
+        presenter?.getCellImage(from: imageItems[indexPath.row], completion: { image in
+            cell.imageView.image = image
+        })
         return cell
     }
 }
