@@ -9,6 +9,7 @@ import UIKit
 
 private enum Style {
     static let collectionViewBackgroundColor: UIColor = .white
+    static let indicatorViewColor: UIColor = .gray
 }
 
 final class ImagesGalleryView: UIView {
@@ -23,6 +24,7 @@ final class ImagesGalleryView: UIView {
 
     lazy var loadingView: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(style: .medium)
+        view.color = Style.indicatorViewColor
         view.hidesWhenStopped = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

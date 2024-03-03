@@ -7,6 +7,10 @@
 
 import UIKit
 
+private enum Style {
+    static let cellBackgroundColor: UIColor = .systemGray6
+}
+
 final class ImagesGalleryCell: UICollectionViewCell {
     // MARK: - Private properties
     var imageView: UIImageView = {
@@ -28,6 +32,7 @@ final class ImagesGalleryCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         buildView()
+        backgroundColor = Style.cellBackgroundColor
     }
     
     required init?(coder: NSCoder) {
@@ -53,6 +58,7 @@ extension ImagesGalleryCell: ViewSetupProtocol {
             imageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor)
         ])
+        
         NSLayoutConstraint.activate([
             favoriteIndicatorImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             favoriteIndicatorImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
