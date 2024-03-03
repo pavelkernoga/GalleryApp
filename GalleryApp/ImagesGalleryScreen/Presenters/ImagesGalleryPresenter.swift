@@ -12,6 +12,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     // MARK: - Private properties
     private var webService: ImagesGalleryWebServiceProtocol
     private weak var delegate: ImagesGalleryViewProtocol?
+    var cellImages = [UIImage]()
 
     // MARK: - Initialization
     required init(webService: ImagesGalleryWebServiceProtocol, delegate: ImagesGalleryViewProtocol) {
@@ -28,7 +29,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
             }
 
             if let imagesItems = imagesItemsResponse {
-                self?.delegate?.updateCollectionView(items: imagesItems)
+                self?.downloadImages(for: imagesItems)
             }
         }
     }
@@ -50,6 +51,25 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
                 sleep(1)
             }
             self.showImagesGallery(page)
+        }
+    }
+
+    private func downloadImages(for items: [ImageItem]) {
+        let imagesDownloadGroup = DispatchGroup()
+        for item in items {
+            imagesDownloadGroup.enter()
+            if let url = URL(string: item.urls.regular) {
+                self.webService.getCellImage(with: url, completion: { image in
+                    if let image = image {
+                        self.cellImages.append(image)
+                        imagesDownloadGroup.leave()
+                    }
+                })
+            }
+        }
+
+        imagesDownloadGroup.notify(queue: .global()) {
+            self.delegate?.updateCollectionView(items: items, images: self.cellImages)
         }
     }
 }

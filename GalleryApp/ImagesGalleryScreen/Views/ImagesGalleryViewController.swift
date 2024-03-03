@@ -12,6 +12,7 @@ final class ImagesGalleryViewController: UIViewController {
     private var contentView = ImagesGalleryView()
     private var presenter: ImagesGalleryPresenterProtocol?
     private var imageItems: [ImageItem] = []
+    private var cellImages: [UIImage]?
     private var isPageLoading: Bool = false
     private var pageToload: Int = 1
 
@@ -43,7 +44,7 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
         }
     }
 
-    func updateCollectionView(items: [ImageItem]) {
+    func updateCollectionView(items: [ImageItem], images: [UIImage]?) {
         if !imageItems.isEmpty {
             for item in items {
                 imageItems.append(item)
@@ -51,6 +52,7 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
         } else {
             imageItems = items
         }
+        cellImages = images
 
         DispatchQueue.main.async {
             self.contentView.collectionView.reloadData()
@@ -80,9 +82,7 @@ extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionVie
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageGalleryCell", for: indexPath) as? ImagesGalleryCell else {
             return UICollectionViewCell()
         }
-        presenter?.getCellImage(from: imageItems[indexPath.row], completion: { image in
-            cell.imageView.image = image
-        })
+        cell.imageView.image = cellImages?[indexPath.row]
         return cell
     }
 
