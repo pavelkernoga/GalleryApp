@@ -34,7 +34,7 @@ final class ImagesGalleryViewController: UIViewController {
 
 // MARK: - ImagesGalleryViewProtocol
 extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
-    func showLoading(_ show: Bool) {
+    func showLoadingIndicator(_ show: Bool) {
         DispatchQueue.main.async {
             (show) ? self.contentView.loadingView.startAnimating() : self.contentView.loadingView.stopAnimating()
         }
