@@ -29,6 +29,7 @@
 		E94675052B927F2100D2DB92 /* GalleryAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94675042B927F2100D2DB92 /* GalleryAppUITestsLaunchTests.swift */; };
 		E94675122B92803800D2DB92 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E94675112B92803800D2DB92 /* README.md */; };
 		E94675152B92822E00D2DB92 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = E94675142B92822E00D2DB92 /* .swiftlint.yml */; };
+		E95847AC2B95039D007617C9 /* UIColleectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95847AB2B95039D007617C9 /* UIColleectionView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		E94675042B927F2100D2DB92 /* GalleryAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E94675112B92803800D2DB92 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E94675142B92822E00D2DB92 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		E95847AB2B95039D007617C9 /* UIColleectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColleectionView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				E92215682B93828300686E41 /* UIView+Extension.swift */,
+				E95847AB2B95039D007617C9 /* UIColleectionView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				E922154F2B931F2E00686E41 /* ImagesGalleryViewController.swift in Sources */,
 				E92215692B93828300686E41 /* UIView+Extension.swift in Sources */,
 				E94674E42B927F1F00D2DB92 /* SceneDelegate.swift in Sources */,
+				E95847AC2B95039D007617C9 /* UIColleectionView+Extension.swift in Sources */,
 				E92215532B932F0B00686E41 /* ImagesGalleryCell.swift in Sources */,
 				E92215662B935BE100686E41 /* ImagesGalleryView.swift in Sources */,
 				E92215592B933F0A00686E41 /* FetchError.swift in Sources */,
