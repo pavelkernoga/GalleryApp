@@ -11,11 +11,14 @@ final class ImagesGalleryViewController: UIViewController {
     // MARK: - Private properties
     private var contentView = ImagesGalleryView()
     private var presenter: ImagesGalleryPresenterProtocol?
+    private var imageItems: [ImageItem] = []
 
     // MARK: - Override
     override func viewDidLoad() {
         super.viewDidLoad()
         view = contentView
+        contentView.collectionView.delegate = self
+        contentView.collectionView.dataSource = self
         setupPresenter()
         presenter?.showImagesGallery()
     }
@@ -31,11 +34,34 @@ final class ImagesGalleryViewController: UIViewController {
 
 // MARK: - ImagesGalleryViewProtocol
 extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
+    func showLoading(_ show: Bool) {
+        DispatchQueue.main.async {
+            (show) ? self.contentView.loadingView.startAnimating() : self.contentView.loadingView.stopAnimating()
+        }
+    }
+
     func showImages(response: [ImageItem]) {
-        // TO DO: update collection according to the received model
+        imageItems = response
+        DispatchQueue.main.async {
+            self.contentView.collectionView.reloadData()
+        }
     }
 
     func showError(_ error: FetchError) {
         // TO DO: show an error message to the user
+    }
+}
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageItems.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageGalleryCell", for: indexPath) as? ImagesGalleryCell else {
+            return UICollectionViewCell()
+        }
+        return cell
     }
 }
