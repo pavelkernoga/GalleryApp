@@ -11,4 +11,5 @@ struct Constants {
     static let apiEndPointBaseUrl = "https://api.unsplash.com/photos/"
     static let accessToken = "?client_id=jW792e9RGStkjjFlC89ba4gYt5bo1bYXRs8sBdqZq5Q"
     static let itemsCount = "&per_page=30"
+    static let pageToLoad = "&page="
 }

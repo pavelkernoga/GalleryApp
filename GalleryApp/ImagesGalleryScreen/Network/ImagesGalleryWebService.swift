@@ -11,7 +11,7 @@ import UIKit
 final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
     // MARK: - Private properties
     private var apiUrlString: String = {
-        let string = Constants.apiEndPointBaseUrl + Constants.accessToken + Constants.itemsCount
+        let string = Constants.apiEndPointBaseUrl + Constants.accessToken + Constants.itemsCount + Constants.pageToLoad
         return string
     }()
     
@@ -21,12 +21,13 @@ final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
         configuration.waitsForConnectivity = true
         return URLSession(configuration: configuration)
     }()
+
     private let cache = NSCache<NSString, UIImage>()
     private var responses = [URL: [(UIImage?) -> Void]]()
 
     // MARK: - Functions
-    func fetchImages(completion: @escaping ([ImageItem]?, FetchError?) -> Void) {
-        guard let url = URL(string: apiUrlString) else {
+    func fetchImages(page: Int, completion: @escaping ([ImageItem]?, FetchError?) -> Void) {
+        guard let url = URL(string: apiUrlString + String(page)) else {
             completion(nil, FetchError.invalidRequestURLString)
             return
         }
