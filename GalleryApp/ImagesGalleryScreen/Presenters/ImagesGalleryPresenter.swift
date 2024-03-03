@@ -20,18 +20,15 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     }
     
     // MARK: - Functions
-    func showImagesGallery() {
-        delegate?.showLoadingIndicator(true)
-        webService.fetchImages { [weak self] responseImagesModel, error in
+    func showImagesGallery(_ page: Int) {
+        webService.fetchImages(page: page) { [weak self] imagesItemsResponse, error in
             if let error = error {
-                self?.delegate?.showLoadingIndicator(false)
-                self?.delegate?.showError(error)
+                self?.delegate?.showError(error: error)
                 return
             }
-            
-            if let responseImagesModel = responseImagesModel {
-                self?.delegate?.showLoadingIndicator(false)
-                self?.delegate?.showImages(response: responseImagesModel)
+
+            if let imagesItems = imagesItemsResponse {
+                self?.delegate?.updateCollectionView(items: imagesItems)
             }
         }
     }
@@ -43,6 +40,16 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
                     completion(image)
                 }
             }
+        }
+    }
+
+    func loadMoreImages(_ page: Int) {
+        self.delegate?.showLoadingIndicator(true)
+        DispatchQueue.global(qos: .userInitiated).async {
+            for _ in 0..<4 {
+                sleep(1)
+            }
+            self.showImagesGallery(page)
         }
     }
 }
