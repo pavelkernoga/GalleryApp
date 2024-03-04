@@ -12,4 +12,9 @@ struct Constants {
     static let accessToken = "?client_id=jW792e9RGStkjjFlC89ba4gYt5bo1bYXRs8sBdqZq5Q"
     static let itemsCount = "&per_page=30"
     static let pageToLoad = "&page="
+
+    static let imageGalleryCell = "ImageGalleryCell"
+    static let imagesDetailCell = "ImagesDetailCell"
+
+    static let favoriteIconName = "favorite"
 }

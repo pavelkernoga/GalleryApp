@@ -21,7 +21,7 @@ final class ImagesGalleryCell: UICollectionViewCell {
         return imageView
     }()
     
-    private var favoriteIndicatorImageView: UIImageView = {
+    var favoriteIndicatorImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,8 +60,10 @@ extension ImagesGalleryCell: ViewSetupProtocol {
         ])
         
         NSLayoutConstraint.activate([
-            favoriteIndicatorImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            favoriteIndicatorImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
+            favoriteIndicatorImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            favoriteIndicatorImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            favoriteIndicatorImageView.heightAnchor.constraint(equalToConstant: 20),
+            favoriteIndicatorImageView.widthAnchor.constraint(equalToConstant: 20)
         ])
     }
 }
