@@ -14,9 +14,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         let imagesGalleryViewController = ImagesGalleryViewController()
-        let navigationViewController = UINavigationController(rootViewController: imagesGalleryViewController)
-        navigationViewController.navigationBar.barTintColor = .white
-        window.rootViewController = navigationViewController
+        let navigationController = UINavigationController(rootViewController: imagesGalleryViewController)
+        window.rootViewController = navigationController
         self.window = window
         window.makeKeyAndVisible()
     }
