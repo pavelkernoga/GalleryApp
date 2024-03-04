@@ -11,8 +11,7 @@ final class ImagesGalleryViewController: UIViewController {
     // MARK: - Private properties
     private var contentView = ImagesGalleryView()
     private var presenter: ImagesGalleryPresenterProtocol?
-    private var imageItems: [ImageItem] = []
-    private var cellImages: [UIImage]?
+    private var galleryElements: [GalleryElement] = []
     private var isPageLoading: Bool = false
     private var pageToload: Int = 1
 
@@ -43,17 +42,16 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
             (show) ? self.contentView.loadingView.startAnimating() : self.contentView.loadingView.stopAnimating()
         }
     }
-
-    func updateCollectionView(items: [ImageItem], images: [UIImage]?) {
-        if !imageItems.isEmpty {
+    
+    func updateCollectionView(items: [GalleryElement]) {
+        if !galleryElements.isEmpty {
             for item in items {
-                imageItems.append(item)
+                galleryElements.append(item)
             }
         } else {
-            imageItems = items
+            galleryElements = items
         }
-        cellImages = images
-
+        
         DispatchQueue.main.async {
             self.contentView.collectionView.reloadData()
             self.isPageLoading = false
@@ -75,22 +73,21 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageItems.count
+        return galleryElements.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageGalleryCell", for: indexPath) as? ImagesGalleryCell else {
             return UICollectionViewCell()
         }
-        cell.imageView.image = cellImages?[indexPath.row]
+        cell.imageView.image = galleryElements[indexPath.row].image
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let imagesDetailViewController = ImagesDetailViewController()
-        imagesDetailViewController.cellImages = cellImages
-        imagesDetailViewController.imageItems = imageItems
         imagesDetailViewController.selectedImageIndexPath = indexPath
+        imagesDetailViewController.galleryElements = galleryElements
         navigationController?.pushViewController(imagesDetailViewController, animated: true)
     }
 
