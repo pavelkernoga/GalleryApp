@@ -86,6 +86,14 @@ extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionVie
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let imagesDetailViewController = ImagesDetailViewController()
+        imagesDetailViewController.cellImages = cellImages
+        imagesDetailViewController.imageItems = imageItems
+        imagesDetailViewController.selectedImageIndexPath = indexPath
+        navigationController?.pushViewController(imagesDetailViewController, animated: true)
+    }
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if contentView.collectionView.isScrolled(),
            !isPageLoading {
