@@ -12,7 +12,6 @@ final class ImagesDetailViewController: UIViewController {
     private var contentView = ImagesDetailView()
 
     // MARK: - Properties
-    var cellImages: [UIImage]!
     var galleryElements: [GalleryElement]!
     var selectedImageIndexPath: IndexPath!
 
@@ -51,7 +50,8 @@ extension ImagesDetailViewController: UICollectionViewDelegate, UICollectionView
         }
         cell.imageTitleLabel.text = galleryElements[indexPath.row].title
         cell.imageTitleLabel.text?.capitalizeFirstLetter()
-
+        cell.imageDescriptionLabel.text = galleryElements[indexPath.row].description
+        cell.imageDescriptionLabel.text?.capitalizeFirstLetter()
         cell.imageView.image = galleryElements[indexPath.row].image
         return cell
     }
