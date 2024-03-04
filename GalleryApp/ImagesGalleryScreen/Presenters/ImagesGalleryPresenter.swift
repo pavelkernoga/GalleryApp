@@ -47,9 +47,6 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     func loadMoreImages(_ page: Int) {
         self.delegate?.showLoadingIndicator(true)
         DispatchQueue.global(qos: .userInitiated).async {
-            for _ in 0..<4 {
-                sleep(1)
-            }
             self.showImagesGallery(page)
         }
     }
