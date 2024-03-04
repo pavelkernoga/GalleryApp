@@ -12,7 +12,6 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     // MARK: - Private properties
     private var webService: ImagesGalleryWebServiceProtocol
     private weak var delegate: ImagesGalleryViewProtocol?
-    var imagesFetched = false
 
     // MARK: - Initialization
     required init(webService: ImagesGalleryWebServiceProtocol, delegate: ImagesGalleryViewProtocol) {
@@ -28,18 +27,14 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
                 return
             }
 
-            if self?.imagesFetched == false {
-                if let imagesItems = imagesItemsResponse {
-                    self?.imagesFetched = true
-                    self?.downloadImages(for: imagesItems)
-                    return
-                }
+            if let imagesItems = imagesItemsResponse {
+                self?.downloadImages(for: imagesItems)
+                return
             }
         }
     }
 
     func loadMoreImages(_ page: Int) {
-        imagesFetched = false
         self.delegate?.showLoadingIndicator(true)
         DispatchQueue.global(qos: .userInitiated).async {
             self.showImagesGallery(page)
@@ -48,8 +43,8 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
 
     private func downloadImages(for items: [ImageItem]) {
         var galleryElements = mappedGalleryElements(items: items)
-
         let imagesDownloadGroup = DispatchGroup()
+
         for item in items {
             imagesDownloadGroup.enter()
             if let url = URL(string: item.urls.regular) {

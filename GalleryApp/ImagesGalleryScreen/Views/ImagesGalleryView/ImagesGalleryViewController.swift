@@ -12,7 +12,7 @@ final class ImagesGalleryViewController: UIViewController {
     private var contentView = ImagesGalleryView()
     private var presenter: ImagesGalleryPresenterProtocol?
     private var galleryElements: [GalleryElement] = []
-    private var isPageLoading: Bool = false
+    private var isDataLoading: Bool = false
     private var pageToload: Int = 1
 
     // MARK: - Override
@@ -21,6 +21,7 @@ final class ImagesGalleryViewController: UIViewController {
         view = contentView
         contentView.collectionView.delegate = self
         contentView.collectionView.dataSource = self
+        isDataLoading = true
         showLoadingIndicator(true)
         setupPresenter()
         presenter?.showImagesGallery(pageToload)
@@ -54,7 +55,7 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
         
         DispatchQueue.main.async {
             self.contentView.collectionView.reloadData()
-            self.isPageLoading = false
+            self.isDataLoading = false
             self.showLoadingIndicator(false)
         }
     }
@@ -93,8 +94,8 @@ extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionVie
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if contentView.collectionView.isScrolled(),
-           !isPageLoading {
-            isPageLoading = true
+           !isDataLoading {
+            isDataLoading = true
             pageToload = (pageToload + 1)
             presenter?.loadMoreImages(pageToload)
         }
