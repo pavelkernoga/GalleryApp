@@ -12,14 +12,14 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     // MARK: - Private properties
     private var webService: ImagesGalleryWebServiceProtocol
     private weak var delegate: ImagesGalleryViewProtocol?
-    var cellImages = [UIImage]()
+    var imagesFetched = false
 
     // MARK: - Initialization
     required init(webService: ImagesGalleryWebServiceProtocol, delegate: ImagesGalleryViewProtocol) {
         self.webService = webService
         self.delegate = delegate
     }
-    
+
     // MARK: - Functions
     func showImagesGallery(_ page: Int) {
         webService.fetchImages(page: page) { [weak self] imagesItemsResponse, error in
@@ -28,23 +28,18 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
                 return
             }
 
-            if let imagesItems = imagesItemsResponse {
-                self?.downloadImages(for: imagesItems)
-            }
-        }
-    }
-
-    func getCellImage(from imageItem: ImageItem, completion: @escaping (UIImage?) -> Void) {
-        if let url = URL(string: imageItem.urls.regular) {
-            webService.getCellImage(with: url) { image in
-                if let image = image {
-                    completion(image)
+            if self?.imagesFetched == false {
+                if let imagesItems = imagesItemsResponse {
+                    self?.imagesFetched = true
+                    self?.downloadImages(for: imagesItems)
+                    return
                 }
             }
         }
     }
 
     func loadMoreImages(_ page: Int) {
+        imagesFetched = false
         self.delegate?.showLoadingIndicator(true)
         DispatchQueue.global(qos: .userInitiated).async {
             self.showImagesGallery(page)
@@ -52,13 +47,16 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     }
 
     private func downloadImages(for items: [ImageItem]) {
+        var galleryElements = mappedGalleryElements(items: items)
+
         let imagesDownloadGroup = DispatchGroup()
         for item in items {
             imagesDownloadGroup.enter()
             if let url = URL(string: item.urls.regular) {
                 self.webService.getCellImage(with: url, completion: { image in
-                    if let image = image {
-                        self.cellImages.append(image)
+                    if let downloadedImage = image,
+                       let imageIndex = galleryElements.firstIndex(where: {$0.id == item.id}) {
+                        galleryElements[imageIndex].image = downloadedImage
                         imagesDownloadGroup.leave()
                     }
                 })
@@ -66,7 +64,13 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         }
 
         imagesDownloadGroup.notify(queue: .global()) {
-            self.delegate?.updateCollectionView(items: items, images: self.cellImages)
+            self.delegate?.updateCollectionView(items: galleryElements)
+        }
+    }
+
+    private func mappedGalleryElements(items: [ImageItem]) -> [GalleryElement] {
+        return items.map {
+            GalleryElement(id: $0.id, title: $0.title, description: $0.description, url: $0.urls.regular, image: nil)
         }
     }
 }
