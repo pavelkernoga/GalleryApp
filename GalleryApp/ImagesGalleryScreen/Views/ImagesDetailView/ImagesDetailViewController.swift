@@ -45,7 +45,7 @@ extension ImagesDetailViewController: UICollectionViewDelegate, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagesDetailCell", for: indexPath) as? ImagesDetailCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.imagesDetailCell, for: indexPath) as? ImagesDetailCell else {
             return UICollectionViewCell()
         }
         cell.imageTitleLabel.text = galleryElements[indexPath.row].title
