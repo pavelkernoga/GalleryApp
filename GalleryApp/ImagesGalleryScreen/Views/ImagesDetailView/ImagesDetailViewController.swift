@@ -13,7 +13,7 @@ final class ImagesDetailViewController: UIViewController {
 
     // MARK: - Properties
     var cellImages: [UIImage]!
-    var imageItems: [ImageItem]!
+    var galleryElements: [GalleryElement]!
     var selectedImageIndexPath: IndexPath!
 
     // MARK: - Ovveride
@@ -23,7 +23,7 @@ final class ImagesDetailViewController: UIViewController {
         contentView.collectionView.delegate = self
         contentView.collectionView.dataSource = self
     }
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollToSelectedImage()
@@ -42,17 +42,17 @@ final class ImagesDetailViewController: UIViewController {
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension ImagesDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageItems.count
+        return galleryElements.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagesGalleryCell", for: indexPath) as? ImagesGalleryCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagesDetailCell", for: indexPath) as? ImagesDetailCell else {
             return UICollectionViewCell()
         }
+        cell.imageTitleLabel.text = galleryElements[indexPath.row].title
+        cell.imageTitleLabel.text?.capitalizeFirstLetter()
 
-        cell.backgroundColor = .white
-        cell.imageView.image = cellImages[indexPath.row]
-        cell.imageView.contentMode = .scaleAspectFit
+        cell.imageView.image = galleryElements[indexPath.row].image
         return cell
     }
 
