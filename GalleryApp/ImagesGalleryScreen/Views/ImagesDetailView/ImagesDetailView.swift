@@ -15,7 +15,7 @@ final class ImagesDetailView: UIView {
     // MARK: - Private properties
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout() )
-        view.register(ImagesGalleryCell.self, forCellWithReuseIdentifier: "ImagesGalleryCell")
+        view.register(ImagesDetailCell.self, forCellWithReuseIdentifier: "ImagesDetailCell")
         view.backgroundColor = Style.collectionViewBackgroundColor
         view.isPagingEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
