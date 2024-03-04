@@ -9,6 +9,6 @@ import UIKit
 
 protocol ImagesGalleryViewProtocol: AnyObject {
     func showLoadingIndicator(_ show: Bool)
-    func updateCollectionView(items: [ImageItem], images: [UIImage]?)
+    func updateCollectionView(items: [GalleryElement])
     func showError(error: FetchError)
 }
