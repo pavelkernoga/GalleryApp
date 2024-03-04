@@ -13,8 +13,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ImagesGalleryViewController()
-        window.makeKeyAndVisible()
+        let imagesGalleryViewController = ImagesGalleryViewController()
+        let navigationViewController = UINavigationController(rootViewController: imagesGalleryViewController)
+        navigationViewController.navigationBar.barTintColor = .white
+        window.rootViewController = navigationViewController
         self.window = window
+        window.makeKeyAndVisible()
     }
 }
