@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E919CD8E2B963C990055C845 /* GalleryElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E919CD8D2B963C990055C845 /* GalleryElement.swift */; };
+		E91EC77B2B970CC9005644C3 /* ImagesDetailViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EC77A2B970CC9005644C3 /* ImagesDetailViewControllerDelegate.swift */; };
 		E922154F2B931F2E00686E41 /* ImagesGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E922154E2B931F2E00686E41 /* ImagesGalleryViewController.swift */; };
 		E92215532B932F0B00686E41 /* ImagesGalleryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92215522B932F0B00686E41 /* ImagesGalleryCell.swift */; };
 		E92215552B933D8600686E41 /* ImageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92215542B933D8600686E41 /* ImageItem.swift */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		E919CD8D2B963C990055C845 /* GalleryElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryElement.swift; sourceTree = "<group>"; };
+		E91EC77A2B970CC9005644C3 /* ImagesDetailViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesDetailViewControllerDelegate.swift; sourceTree = "<group>"; };
 		E922154E2B931F2E00686E41 /* ImagesGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesGalleryViewController.swift; sourceTree = "<group>"; };
 		E92215522B932F0B00686E41 /* ImagesGalleryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesGalleryCell.swift; sourceTree = "<group>"; };
 		E92215542B933D8600686E41 /* ImageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageItem.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				E922155C2B93417900686E41 /* ImagesGalleryPresenterProtocol.swift */,
 				E922155E2B93421100686E41 /* ImagesGalleryViewProtocol.swift */,
 				E92215632B93536000686E41 /* ViewSetupProtocol.swift */,
+				E91EC77A2B970CC9005644C3 /* ImagesDetailViewControllerDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				E94674E42B927F1F00D2DB92 /* SceneDelegate.swift in Sources */,
 				E95847AC2B95039D007617C9 /* UIColleectionView+Extension.swift in Sources */,
 				E9FA90D22B95B14000A90B76 /* ImagesDetailView.swift in Sources */,
+				E91EC77B2B970CC9005644C3 /* ImagesDetailViewControllerDelegate.swift in Sources */,
 				E92215532B932F0B00686E41 /* ImagesGalleryCell.swift in Sources */,
 				E92215662B935BE100686E41 /* ImagesGalleryView.swift in Sources */,
 				E92215592B933F0A00686E41 /* FetchError.swift in Sources */,
