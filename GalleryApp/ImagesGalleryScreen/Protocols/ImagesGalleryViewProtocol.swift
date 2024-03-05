@@ -11,4 +11,5 @@ protocol ImagesGalleryViewProtocol: AnyObject {
     func showLoadingIndicator(_ show: Bool)
     func updateCollectionView(items: [GalleryElement])
     func showError(error: FetchError)
+    func updateLike(atIndex index: Int, with value: Bool)
 }

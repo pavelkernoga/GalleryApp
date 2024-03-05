@@ -12,4 +12,5 @@ protocol ImagesGalleryPresenterProtocol: AnyObject {
     
     func showImagesGallery(_ page: Int)
     func loadMoreImages(_ page: Int)
+    func likeUpdated(forIndex index: Int, withValue value: Bool)
 }
