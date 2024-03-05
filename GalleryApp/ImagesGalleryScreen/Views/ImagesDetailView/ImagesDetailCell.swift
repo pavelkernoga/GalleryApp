@@ -13,6 +13,8 @@ private enum Style {
     static let descriptionLabelColor: UIColor = .black
     static let titleFontSize: UIFont = .systemFont(ofSize: 15, weight: .bold)
     static let descriptionFontSize: UIFont = .systemFont(ofSize: 15, weight: .medium)
+    static let favoriteImage = UIImage(named: Constants.favoriteIconName)
+    static let favoriteSelectedImage = UIImage(named: Constants.favoriteSelectedIconName)
 }
 
 final class ImagesDetailCell: UICollectionViewCell {
@@ -45,10 +47,35 @@ final class ImagesDetailCell: UICollectionViewCell {
         return imageView
     }()
 
+    var favoriteIndicatorImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = Style.favoriteImage
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
+        return imageView
+    }()
+
+//    var likeButton: UIButton = {
+//        let button = UIButton()
+//        button.setImage(Style.favoriteImage, for: .normal)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
+
+    var isLiked: Bool = false {
+        didSet {
+            updateFavoriteIndicator()
+        }
+    }
+
+    var onLikeToggle: ((Bool) -> Void)?
+
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: .zero)
         buildView()
+        setupGestureRecognizers()
         backgroundColor = Style.cellBackgroundColor
     }
 
@@ -62,13 +89,33 @@ final class ImagesDetailCell: UICollectionViewCell {
         imageTitleLabel.text = nil
         imageDescriptionLabel.text = nil
         imageView.image = nil
+        favoriteIndicatorImageView.image = nil
+        isLiked = false
+    }
+
+    // MARK: - Private functions
+    private func setupGestureRecognizers() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(favoriteTapped))
+        favoriteIndicatorImageView.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func favoriteTapped() {
+        isLiked.toggle()
+        onLikeToggle?(isLiked)
+    }
+
+    private func updateFavoriteIndicator() {
+        UIView.animate(withDuration: 0.5) {
+            let imageName = self.isLiked ? Constants.favoriteSelectedIconName : Constants.favoriteIconName
+            self.favoriteIndicatorImageView.image = UIImage(named: imageName)
+        }
     }
 }
 
 // MARK: - ViewSetupProtocol
 extension ImagesDetailCell: ViewSetupProtocol {
     func setupHierarchy() {
-        contentView.addSubviews([imageTitleLabel, imageDescriptionLabel, imageView])
+        contentView.addSubviews([imageTitleLabel, imageDescriptionLabel, imageView, favoriteIndicatorImageView])
     }
 
     func setupConstraints() {
@@ -90,5 +137,19 @@ extension ImagesDetailCell: ViewSetupProtocol {
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+
+        NSLayoutConstraint.activate([
+            favoriteIndicatorImageView.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 20),
+            favoriteIndicatorImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            favoriteIndicatorImageView.widthAnchor.constraint(equalToConstant: 30),
+            favoriteIndicatorImageView.heightAnchor.constraint(equalToConstant: 30)
+        ])
+
+//        NSLayoutConstraint.activate([
+//            likeButton.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 20),
+//            likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+//            likeButton.widthAnchor.constraint(equalToConstant: 30),
+//            likeButton.heightAnchor.constraint(equalToConstant: 30)
+//        ])
     }
 }

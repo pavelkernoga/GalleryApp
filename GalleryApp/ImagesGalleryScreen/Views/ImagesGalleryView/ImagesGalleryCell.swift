@@ -28,6 +28,12 @@ final class ImagesGalleryCell: UICollectionViewCell {
         return imageView
     }()
 
+    var isLiked: Bool = false {
+        didSet {
+            updateFavoriteIndicator()
+        }
+    }
+
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -44,6 +50,13 @@ final class ImagesGalleryCell: UICollectionViewCell {
         super.prepareForReuse()
         imageView.image = nil
         favoriteIndicatorImageView.image = nil
+    }
+
+    private func updateFavoriteIndicator() {
+        UIView.animate(withDuration: 0.5) {
+            let imageName = self.isLiked ? Constants.favoriteSelectedIconName : Constants.favoriteIconName
+            self.favoriteIndicatorImageView.image = UIImage(named: imageName)
+        }
     }
 }
 
