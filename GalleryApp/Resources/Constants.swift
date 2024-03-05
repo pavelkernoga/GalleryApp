@@ -18,4 +18,5 @@ struct Constants {
 
     static let favoriteIconName = "favorite_unselected"
     static let favoriteSelectedIconName = "favorite_selected"
+    static let likedImagesIconName = "liked_images"
 }

@@ -28,6 +28,7 @@ final class ImagesGalleryViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        configureNavLikeButton()
         contentView.collectionView.reloadData()
     }
 
@@ -37,6 +38,28 @@ final class ImagesGalleryViewController: UIViewController {
             let webService = ImagesGalleryWebService()
             presenter = ImagesGalleryPresenter(webService: webService, delegate: self)
         }
+    }
+
+    private func configureNavLikeButton() {
+        let image = UIImage(named: Constants.likedImagesIconName)
+        let likeBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(presentFavoritesImages(sender:)))
+        navigationItem.rightBarButtonItem = nil
+
+        galleryElements.forEach { item in
+            if item.isLiked {
+                navigationItem.rightBarButtonItem = likeBarButtonItem
+                return
+            }
+        }
+    }
+
+    @objc func presentFavoritesImages(sender: UIBarButtonItem) {
+        galleryElements.forEach({ item in
+            if item.isLiked {
+                // TO DO:
+//                presenter.showFavoritesImages()
+            }
+        })
     }
 }
 
