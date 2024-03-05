@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ImageItem: Decodable {
+struct ResponseImageItem: Decodable {
     let id: String
     let description: String?
     let urls: ImageURLs
