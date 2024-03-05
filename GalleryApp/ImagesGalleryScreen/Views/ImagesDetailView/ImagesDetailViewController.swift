@@ -14,6 +14,7 @@ final class ImagesDetailViewController: UIViewController {
     // MARK: - Properties
     var galleryElements: [GalleryElement]!
     var selectedImageIndexPath: IndexPath!
+    weak var delegate: ImagesDetailViewControllerDelegate?
 
     // MARK: - Ovveride
     override func viewDidLoad() {
@@ -53,7 +54,26 @@ extension ImagesDetailViewController: UICollectionViewDelegate, UICollectionView
         cell.imageDescriptionLabel.text = galleryElements[indexPath.row].description
         cell.imageDescriptionLabel.text?.capitalizeFirstLetter()
         cell.imageView.image = galleryElements[indexPath.row].image
+
+        if galleryElements[indexPath.row].isLiked {
+            cell.isLiked = true
+        }
+        //        cell.likeButton.addTarget(self, action: #selector(likeButtonTaped), for: .touchUpInside)
         return cell
+    }
+
+//    @objc func likeButtonTaped(sender: UIButton) {
+//        if let cellIndex = contentView.collectionView.indexPathsForVisibleItems.first,
+//           let cell = contentView.collectionView.cellForItem(at: cellIndex) {
+//        }
+//    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? ImagesDetailCell {
+            cell.isLiked.toggle()
+            cell.onLikeToggle?(cell.isLiked)
+            delegate?.didUpdateLike(forIndex: indexPath.row, withValue: cell.isLiked)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
