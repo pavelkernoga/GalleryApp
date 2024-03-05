@@ -36,7 +36,10 @@ final class ImagesGalleryViewController: UIViewController {
     private func setupPresenter() {
         if presenter == nil {
             let webService = ImagesGalleryWebService()
-            presenter = ImagesGalleryPresenter(webService: webService, delegate: self)
+            let corDataService = ImagesGalleryCoreDataService()
+            presenter = ImagesGalleryPresenter(webService: webService,
+                                               corDataService: corDataService,
+                                               delegate: self)
         }
     }
 
@@ -60,6 +63,7 @@ final class ImagesGalleryViewController: UIViewController {
 //                presenter.showFavoritesImages()
             }
         })
+        presenter?.saveGalleryItem(item: galleryElements[1])
     }
 }
 
@@ -106,6 +110,8 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
 extension ImagesGalleryViewController: ImagesDetailViewControllerDelegate {
     func didUpdateLike(forIndex index: Int, withValue value: Bool) {
         presenter?.likeUpdated(forIndex: index, withValue: value)
+        let likedItem = galleryElements[index]
+        presenter?.saveGalleryItem(item: likedItem)
     }
 }
 
