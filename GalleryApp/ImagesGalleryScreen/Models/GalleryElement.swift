@@ -13,4 +13,5 @@ struct GalleryElement {
     let description: String?
     let url: String
     var image: UIImage?
+    var isLiked: Bool
 }
