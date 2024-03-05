@@ -15,7 +15,7 @@ final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
 
         let managedContext = appDelegate.persistentContainer.viewContext
-        guard let entity = NSEntityDescription.entity(forEntityName: "GalleryDataEntity", in: managedContext) else {
+        guard let entity = NSEntityDescription.entity(forEntityName: Constants.galleryDataEntityName, in: managedContext) else {
             return
         }
 
@@ -52,7 +52,7 @@ final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
     private func fetchGalleryElement(id: String) throws -> GalleryDataEntity? {
         let request: NSFetchRequest<GalleryDataEntity> = GalleryDataEntity.fetchRequest()
         request.returnsObjectsAsFaults = false
-        request.predicate = NSPredicate(format: "id == %@", id)
+        request.predicate = NSPredicate(format: Constants.predicateFormat, id)
         do {
             return try context?.fetch(request).first
         } catch {

@@ -63,7 +63,6 @@ final class ImagesGalleryViewController: UIViewController {
 //                presenter.showFavoritesImages()
             }
         })
-        presenter?.saveGalleryItem(item: galleryElements[1])
     }
 }
 
