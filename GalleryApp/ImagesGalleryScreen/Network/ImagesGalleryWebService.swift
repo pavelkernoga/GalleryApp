@@ -26,7 +26,7 @@ final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
     private var responses = [URL: [(UIImage?) -> Void]]()
 
     // MARK: - Functions
-    func fetchImages(page: Int, completion: @escaping ([ImageItem]?, FetchError?) -> Void) {
+    func fetchImages(page: Int, completion: @escaping ([ResponseImageItem]?, FetchError?) -> Void) {
         guard let url = URL(string: apiUrlString + String(page)) else {
             completion(nil, FetchError.invalidRequestURLString)
             return
@@ -57,7 +57,7 @@ final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
             }
             
             do {
-                let imagesResponse = try JSONDecoder().decode([ImageItem].self, from: data)
+                let imagesResponse = try JSONDecoder().decode([ResponseImageItem].self, from: data)
                 completion(imagesResponse, nil)
             } catch {
                 completion(nil, FetchError.invalidResponseModel)

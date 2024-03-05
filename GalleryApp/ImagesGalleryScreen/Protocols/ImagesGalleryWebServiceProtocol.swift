@@ -8,6 +8,6 @@
 import UIKit
 
 protocol ImagesGalleryWebServiceProtocol {
-    func fetchImages(page: Int, completion: @escaping([ImageItem]?, FetchError?) -> Void)
+    func fetchImages(page: Int, completion: @escaping([ResponseImageItem]?, FetchError?) -> Void)
     func getCellImage(with url: URL, completion: @escaping (UIImage?) -> Void)
 }

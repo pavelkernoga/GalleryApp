@@ -45,7 +45,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         self.delegate?.updateLike(atIndex: index, with: value)
     }
 
-    private func downloadImages(for items: [ImageItem]) {
+    private func downloadImages(for items: [ResponseImageItem]) {
         var galleryElements = mappedGalleryElements(items: items)
         let imagesDownloadGroup = DispatchGroup()
 
@@ -67,7 +67,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         }
     }
 
-    private func mappedGalleryElements(items: [ImageItem]) -> [GalleryElement] {
+    private func mappedGalleryElements(items: [ResponseImageItem]) -> [GalleryElement] {
         return items.map {
             GalleryElement(id: $0.id, title: $0.title, description: $0.description, url: $0.urls.regular, image: nil, isLiked: false)
         }
