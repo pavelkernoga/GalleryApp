@@ -41,6 +41,10 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         }
     }
 
+    func likeUpdated(forIndex index: Int, withValue value: Bool) {
+        self.delegate?.updateLike(atIndex: index, with: value)
+    }
+
     private func downloadImages(for items: [ImageItem]) {
         var galleryElements = mappedGalleryElements(items: items)
         let imagesDownloadGroup = DispatchGroup()
@@ -65,7 +69,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
 
     private func mappedGalleryElements(items: [ImageItem]) -> [GalleryElement] {
         return items.map {
-            GalleryElement(id: $0.id, title: $0.title, description: $0.description, url: $0.urls.regular, image: nil)
+            GalleryElement(id: $0.id, title: $0.title, description: $0.description, url: $0.urls.regular, image: nil, isLiked: false)
         }
     }
 }
