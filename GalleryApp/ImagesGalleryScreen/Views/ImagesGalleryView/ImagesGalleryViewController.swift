@@ -27,6 +27,10 @@ final class ImagesGalleryViewController: UIViewController {
         presenter?.showImagesGallery(pageToload)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        contentView.collectionView.reloadData()
+    }
+
     // MARK: - Private functions
     private func setupPresenter() {
         if presenter == nil {
@@ -69,6 +73,17 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
             self.present(alert, animated: true)
         }
     }
+
+    func updateLike(atIndex index: Int, with value: Bool) {
+        galleryElements[index].isLiked = value
+    }
+}
+
+// MARK: - ImagesDetailViewControllerDelegate
+extension ImagesGalleryViewController: ImagesDetailViewControllerDelegate {
+    func didUpdateLike(forIndex index: Int, withValue value: Bool) {
+        presenter?.likeUpdated(forIndex: index, withValue: value)
+    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
@@ -82,6 +97,9 @@ extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionVie
             return UICollectionViewCell()
         }
         cell.imageView.image = galleryElements[indexPath.row].image
+        if galleryElements[indexPath.row].isLiked {
+            cell.isLiked = true
+        }
         return cell
     }
 
@@ -89,6 +107,7 @@ extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionVie
         let imagesDetailViewController = ImagesDetailViewController()
         imagesDetailViewController.selectedImageIndexPath = indexPath
         imagesDetailViewController.galleryElements = galleryElements
+        imagesDetailViewController.delegate = self
         navigationController?.pushViewController(imagesDetailViewController, animated: true)
     }
 
