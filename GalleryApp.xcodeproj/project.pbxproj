@@ -116,10 +116,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E91EC7A72B97B82C005644C3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E91EC7A82B97B834005644C3 /* DataBase */,
+				E92215602B9343A500686E41 /* Network */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E91EC7A82B97B834005644C3 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataBase;
+			sourceTree = "<group>";
+		};
 		E92215492B93196500686E41 /* ImagesGalleryScreen */ = {
 			isa = PBXGroup;
 			children = (
-				E92215602B9343A500686E41 /* Network */,
+				E91EC7A72B97B82C005644C3 /* Services */,
 				E922154D2B9319E000686E41 /* Presenters */,
 				E922154C2B9319D800686E41 /* Protocols */,
 				E922154B2B9319AD00686E41 /* Models */,
@@ -188,6 +204,8 @@
 		E922156E2B939C7B00686E41 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E94674EA2B927F2000D2DB92 /* Assets.xcassets */,
+				E94674EF2B927F2000D2DB92 /* Info.plist */,
 				E922156C2B939C3500686E41 /* Constants.swift */,
 			);
 			path = Resources;
@@ -222,9 +240,7 @@
 				E922156E2B939C7B00686E41 /* Resources */,
 				E94674E12B927F1F00D2DB92 /* AppDelegate.swift */,
 				E94674E32B927F1F00D2DB92 /* SceneDelegate.swift */,
-				E94674EA2B927F2000D2DB92 /* Assets.xcassets */,
 				E94674EC2B927F2000D2DB92 /* LaunchScreen.storyboard */,
-				E94674EF2B927F2000D2DB92 /* Info.plist */,
 				E94675142B92822E00D2DB92 /* .swiftlint.yml */,
 			);
 			path = GalleryApp;
@@ -620,7 +636,7 @@
 				DEVELOPMENT_TEAM = 94KK2872Q5;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GalleryApp/Info.plist;
+				INFOPLIST_FILE = GalleryApp/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -649,7 +665,7 @@
 				DEVELOPMENT_TEAM = 94KK2872Q5;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GalleryApp/Info.plist;
+				INFOPLIST_FILE = GalleryApp/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
