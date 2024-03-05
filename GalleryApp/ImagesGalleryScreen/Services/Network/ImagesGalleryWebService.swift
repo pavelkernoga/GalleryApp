@@ -68,11 +68,11 @@ final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
 
     func getCellImage(with url: URL, completion: @escaping (UIImage?) -> Void) {
         if let image = cache.object(forKey: url.absoluteString as NSString) {
-            debugPrint("dbg: cell image loaded from cache")
+            debugPrint("dbg: cell image loaded from cache: \(url.absoluteString)")
             completion(image)
         } else {
             load(with: url, completion: completion)
-            debugPrint("dbg: cell image loaded from internet")
+            debugPrint("dbg: cell image loaded from internet: \(url.absoluteString)")
         }
     }
 

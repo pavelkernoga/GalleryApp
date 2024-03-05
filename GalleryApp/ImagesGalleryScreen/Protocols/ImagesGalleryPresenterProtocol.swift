@@ -16,4 +16,5 @@ protocol ImagesGalleryPresenterProtocol: AnyObject {
     func loadMoreImages(_ page: Int)
     func likeUpdated(forIndex index: Int, withValue value: Bool)
     func saveGalleryItem(item: GalleryElement)
+    func deleteGalleryItem(item: GalleryElement)
 }

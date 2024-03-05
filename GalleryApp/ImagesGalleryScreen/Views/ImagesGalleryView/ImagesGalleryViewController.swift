@@ -111,7 +111,11 @@ extension ImagesGalleryViewController: ImagesDetailViewControllerDelegate {
     func didUpdateLike(forIndex index: Int, withValue value: Bool) {
         presenter?.likeUpdated(forIndex: index, withValue: value)
         let likedItem = galleryElements[index]
-        presenter?.saveGalleryItem(item: likedItem)
+        if value == true {
+            presenter?.saveGalleryItem(item: likedItem)
+            return
+        }
+        presenter?.deleteGalleryItem(item: likedItem)
     }
 }
 

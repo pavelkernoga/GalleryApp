@@ -24,7 +24,7 @@ final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
         do {
             try managedContext.save()
             if let entity = try fetchGalleryElement(id: element.id ?? "") {
-                debugPrint("dbg: saved CoreData entity: \(entity)")
+                debugPrint("dbg: entity saved to the Core Data: \(entity)")
             }
         } catch {
             throw CoreDataError.fetchingError(message: error.localizedDescription)
@@ -36,6 +36,7 @@ final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
              if let entity = try fetchGalleryElement(id: id) {
                  context?.delete(entity)
                  try? context?.save()
+                 debugPrint("dbg: entity deleted from Core Data: \(entity)")
              }
          } catch {
              throw CoreDataError.deletingError(message: error.localizedDescription)
@@ -50,6 +51,7 @@ final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
 
     private func fetchGalleryElement(id: String) throws -> GalleryDataEntity? {
         let request: NSFetchRequest<GalleryDataEntity> = GalleryDataEntity.fetchRequest()
+        request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "id == %@", id)
         do {
             return try context?.fetch(request).first

@@ -53,6 +53,10 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         try? self.corDataService.saveGalleryElement(element: item)
     }
 
+    func deleteGalleryItem(item: GalleryElement) {
+        try? self.corDataService.deleteGalleryElement(id: item.id ?? "")
+    }
+
     private func downloadImages(for items: [ResponseImageItem]) {
         var galleryElements = mappedGalleryElements(items: items)
         let imagesDownloadGroup = DispatchGroup()
