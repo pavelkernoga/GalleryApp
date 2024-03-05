@@ -25,7 +25,7 @@ final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
     private let cache = NSCache<NSString, UIImage>()
     private var responses = [URL: [(UIImage?) -> Void]]()
 
-    // MARK: - Functions
+    // MARK: - ImagesGalleryWebServiceProtocol
     func fetchImages(page: Int, completion: @escaping ([ResponseImageItem]?, FetchError?) -> Void) {
         guard let url = URL(string: apiUrlString + String(page)) else {
             completion(nil, FetchError.invalidRequestURLString)
@@ -40,22 +40,18 @@ final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
                 completion(nil, FetchError.failedRequest(description: requestError.localizedDescription))
                 return
             }
-            
             guard let response = response as? HTTPURLResponse else {
                 completion(nil, FetchError.invalidResponse)
                 return
             }
-            
             if response.statusCode != 200 {
                 completion(nil, FetchError.invalidStatusCode(code: response.statusCode))
                 return
             }
-            
             guard let data = data else {
                 completion(nil, FetchError.invalidData)
                 return
             }
-            
             do {
                 let imagesResponse = try JSONDecoder().decode([ResponseImageItem].self, from: data)
                 completion(imagesResponse, nil)
@@ -76,16 +72,15 @@ final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
         }
     }
 
+    // MARK: - Private functions
     private func load(with url: URL, completion: @escaping (UIImage?) -> Void) {
         let task = URLSession.shared.dataTask(with: url) {data, _, _ in
-
             if self.responses[url] != nil {
                 self.responses[url]?.append(completion)
                 return
             } else {
                 self.responses[url] = [completion]
             }
-
             guard let data = data,
                   let image = UIImage(data: data),
                   let blocks = self.responses[url] else {
@@ -94,9 +89,7 @@ final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
                 }
                 return
             }
-
             self.cache.setObject(image, forKey: url.absoluteString as NSString)
-
             for block in blocks {
                 DispatchQueue.main.async {
                     block(image)

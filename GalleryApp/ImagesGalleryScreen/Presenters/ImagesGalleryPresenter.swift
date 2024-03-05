@@ -23,7 +23,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         self.delegate = delegate
     }
 
-    // MARK: - Functions
+    // MARK: - ImagesGalleryPresenterProtocol
     func showImagesGallery(_ page: Int) {
         webService.fetchImages(page: page) { [weak self] imagesItemsResponse, error in
             if let error = error {
@@ -57,10 +57,10 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         try? self.corDataService.deleteGalleryElement(id: item.id ?? "")
     }
 
+    // MARK: - Private functions
     private func downloadImages(for items: [ResponseImageItem]) {
         var galleryElements = mappedGalleryElements(items: items)
         let imagesDownloadGroup = DispatchGroup()
-
         for item in items {
             imagesDownloadGroup.enter()
             if let url = URL(string: item.urls.regular) {
@@ -73,7 +73,6 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
                 })
             }
         }
-
         imagesDownloadGroup.notify(queue: .global()) {
             self.delegate?.updateCollectionView(items: galleryElements)
         }

@@ -52,6 +52,7 @@ final class ImagesGalleryCell: UICollectionViewCell {
         favoriteIndicatorImageView.image = nil
     }
 
+    // MARK: - Private functions
     private func updateFavoriteIndicator() {
         UIView.animate(withDuration: 0.5) {
             let imageName = self.isLiked ? Constants.favoriteSelectedIconName : Constants.favoriteIconName
@@ -71,7 +72,6 @@ extension ImagesGalleryCell: ViewSetupProtocol {
             imageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor)
         ])
-        
         NSLayoutConstraint.activate([
             favoriteIndicatorImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             favoriteIndicatorImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),

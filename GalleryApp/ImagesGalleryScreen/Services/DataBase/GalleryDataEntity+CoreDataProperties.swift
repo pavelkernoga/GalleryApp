@@ -13,8 +13,9 @@ extension GalleryDataEntity {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<GalleryDataEntity> {
         return NSFetchRequest<GalleryDataEntity>(entityName: "GalleryDataEntity")
     }
+
     @NSManaged public var id: String
     @NSManaged public var url: String
 }
 
-extension GalleryDataEntity: Identifiable { }
+extension GalleryDataEntity: Identifiable {}

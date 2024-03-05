@@ -108,20 +108,17 @@ extension ImagesDetailCell: ViewSetupProtocol {
             imageTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             imageTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
-
         NSLayoutConstraint.activate([
             imageDescriptionLabel.topAnchor.constraint(equalTo: imageTitleLabel.bottomAnchor, constant: 20),
             imageDescriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             imageDescriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ])
-
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: imageDescriptionLabel.bottomAnchor, constant: 10),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-
         NSLayoutConstraint.activate([
             likeButton.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 20),
             likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),

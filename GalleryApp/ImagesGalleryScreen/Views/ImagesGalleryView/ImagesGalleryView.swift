@@ -66,7 +66,6 @@ extension ImagesGalleryView: ViewSetupProtocol {
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-
         NSLayoutConstraint.activate([
             loadingView.centerYAnchor.constraint(equalTo: centerYAnchor),
             loadingView.centerXAnchor.constraint(equalTo: centerXAnchor)

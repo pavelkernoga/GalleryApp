@@ -10,6 +10,4 @@ import Foundation
 import CoreData
 
 @objc(GalleryDataEntity)
-public class GalleryDataEntity: NSManagedObject {
-
-}
+public class GalleryDataEntity: NSManagedObject {}

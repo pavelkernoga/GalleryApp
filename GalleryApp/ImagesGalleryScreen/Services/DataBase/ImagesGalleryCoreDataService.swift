@@ -9,18 +9,17 @@ import UIKit
 import CoreData
 
 final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
+    // MARK: - Private properties
     private let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
 
+    //MARK: - ImagesGalleryDataBaseProtocol
     func saveGalleryElement(element: GalleryElement) throws {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-
         let managedContext = appDelegate.persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.galleryDataEntityName, in: managedContext) else {
             return
         }
-
         createFavoriteItemEntity(entity: entity, element: element)
-
         do {
             try managedContext.save()
             if let entity = try fetchGalleryElement(id: element.id ?? "") {
@@ -43,6 +42,7 @@ final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
          }
      }
 
+    // MARK: - Private functions
     private func createFavoriteItemEntity(entity: NSEntityDescription, element: GalleryElement) {
         let elementEntity = GalleryDataEntity(entity: entity, insertInto: context)
         elementEntity.id = element.id ?? ""

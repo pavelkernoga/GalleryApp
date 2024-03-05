@@ -82,7 +82,6 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
         } else {
             galleryElements = items
         }
-        
         DispatchQueue.main.async {
             self.contentView.collectionView.reloadData()
             self.isDataLoading = false
@@ -93,7 +92,6 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
     func showError(error: FetchError) {
         let alert = UIAlertController(title: "Error", message: "Cannot upload photos at this time", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
-        
         DispatchQueue.main.async {
             self.showLoadingIndicator(false)
             self.present(alert, animated: true)
