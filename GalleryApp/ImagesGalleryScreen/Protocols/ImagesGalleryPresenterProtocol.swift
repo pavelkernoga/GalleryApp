@@ -8,9 +8,12 @@
 import UIKit
 
 protocol ImagesGalleryPresenterProtocol: AnyObject {
-    init(webService: ImagesGalleryWebServiceProtocol, delegate: ImagesGalleryViewProtocol)
-    
+    init(webService: ImagesGalleryWebServiceProtocol,
+         corDataService: ImagesGalleryDataBaseProtocol,
+         delegate: ImagesGalleryViewProtocol)
+
     func showImagesGallery(_ page: Int)
     func loadMoreImages(_ page: Int)
     func likeUpdated(forIndex index: Int, withValue value: Bool)
+    func saveGalleryItem(item: GalleryElement)
 }

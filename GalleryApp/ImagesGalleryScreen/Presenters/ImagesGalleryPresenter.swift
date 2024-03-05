@@ -11,11 +11,15 @@ import UIKit
 final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     // MARK: - Private properties
     private var webService: ImagesGalleryWebServiceProtocol
+    private var corDataService: ImagesGalleryDataBaseProtocol
     private weak var delegate: ImagesGalleryViewProtocol?
 
     // MARK: - Initialization
-    required init(webService: ImagesGalleryWebServiceProtocol, delegate: ImagesGalleryViewProtocol) {
+    required init(webService: ImagesGalleryWebServiceProtocol,
+                  corDataService: ImagesGalleryDataBaseProtocol,
+                  delegate: ImagesGalleryViewProtocol) {
         self.webService = webService
+        self.corDataService = corDataService
         self.delegate = delegate
     }
 
@@ -43,6 +47,10 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
 
     func likeUpdated(forIndex index: Int, withValue value: Bool) {
         self.delegate?.updateLike(atIndex: index, with: value)
+    }
+
+    func saveGalleryItem(item: GalleryElement) {
+        try? self.corDataService.saveGalleryElement(element: item)
     }
 
     private func downloadImages(for items: [ResponseImageItem]) {
