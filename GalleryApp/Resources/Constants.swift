@@ -16,6 +16,6 @@ struct Constants {
     static let imageGalleryCell = "ImageGalleryCell"
     static let imagesDetailCell = "ImagesDetailCell"
 
-    static let favoriteIconName = "favorite"
+    static let favoriteIconName = "favorite_unselected"
     static let favoriteSelectedIconName = "favorite_selected"
 }
