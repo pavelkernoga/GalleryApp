@@ -8,6 +8,7 @@
 import XCTest
 @testable import GalleryApp
 
+// swiftlint:disable all
 final class ImagesGalleryViewControllerTests: XCTestCase {
     var sut: ImagesGalleryViewController!
 
@@ -55,3 +56,4 @@ final class ImagesGalleryViewControllerTests: XCTestCase {
         XCTAssertTrue(mockImagesGalleryPresenter.showImagesGalleryCalled, "The showImagesGallery() method was not called on a Presenter object when the ImagesGalleryViewController was created")
     }
 }
+// swiftlint:enable all

@@ -12,7 +12,7 @@ final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
     // MARK: - Private properties
     private let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
 
-    //MARK: - ImagesGalleryDataBaseProtocol
+    // MARK: - ImagesGalleryDataBaseProtocol
     func saveGalleryElement(element: GalleryElement) throws {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let managedContext = appDelegate.persistentContainer.viewContext

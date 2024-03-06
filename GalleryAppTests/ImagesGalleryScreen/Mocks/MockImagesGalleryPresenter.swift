@@ -8,12 +8,11 @@
 import Foundation
 @testable import GalleryApp
 
+// swiftlint:disable all
 final class MockImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     var showImagesGalleryCalled: Bool = false
 
-    init(webService: GalleryApp.ImagesGalleryWebServiceProtocol, corDataService: GalleryApp.ImagesGalleryDataBaseProtocol, delegate: GalleryApp.ImagesGalleryViewProtocol) {
-        // TO DO:
-    }
+    init(webService: GalleryApp.ImagesGalleryWebServiceProtocol, corDataService: GalleryApp.ImagesGalleryDataBaseProtocol, delegate: GalleryApp.ImagesGalleryViewProtocol) {}
     
     func showImagesGallery(_ page: Int) {
         showImagesGalleryCalled = true
@@ -29,3 +28,4 @@ final class MockImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     
     func showFavoriteImagesIfNeeded(items: [GalleryApp.GalleryElement]) {}
 }
+// swiftlint:disable all

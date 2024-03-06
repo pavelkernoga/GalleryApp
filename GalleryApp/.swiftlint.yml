@@ -1,3 +1,11 @@
+identifier_name:
+  min_length:
+    warning: 
+  max_length:
+    warning: 40
+  excluded:
+    - id
+
 opt_in_rules:
  - indentation_width
  - explicit_self
