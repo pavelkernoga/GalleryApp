@@ -6,7 +6,7 @@ My linkedin: https://www.linkedin.com/in/pavel-kernoga/
 This is a simple iOS application that allows users to browse and favourite images fetched from Unsplash API.
 
 ## Additional features implemented beyond the stated requirements:
-- Ability to open all your favorite pictures on a new page;
+- Ability to open all your favorite pictures on a new page.
 
 ## Architecture:
 The application is based on MVP architecture, which simplifies its further development, maintenance and testing. Dependency injection is used.
@@ -26,4 +26,8 @@ The application is based on MVP architecture, which simplifies its further devel
 - Implemented basic swipe gestures to navigate between images in the detail view.
 
 ## Demo:
+![galleryView](https://github.com/pavelkernoga/GalleryApp/assets/71964377/e2242249-8b42-461c-9cea-c1784a49d84e)
+![detail screen](https://github.com/pavelkernoga/GalleryApp/assets/71964377/80aa64eb-9d23-4272-8801-f32480a7a903)
+![detail screen - liked image](https://github.com/pavelkernoga/GalleryApp/assets/71964377/8aa299db-d0df-4441-9fe6-608b0c2e23c5)
+![gallery screen - liked images](https://github.com/pavelkernoga/GalleryApp/assets/71964377/b6a99ee1-170f-4dab-bb5c-6188773d0e96)![fallery screen - only liked images](https://github.com/pavelkernoga/GalleryApp/assets/71964377/fe6cab13-2405-42ab-b2df-949af4335c95)
 
