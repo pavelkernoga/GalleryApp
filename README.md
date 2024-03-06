@@ -1,7 +1,7 @@
 # Gallery app
 
 Hello there! My name is Pavel, I'm an iOS developer. Welcome to this repository!
-My CV: https://drive.google.com/file/d/1J6gS-EjPcqrBeD2hUhSNSEl4kQ5weolk/view?usp=share_link
+My CV: https://drive.google.com/file/d/1J6gS-EjPcqrBeD2hUhSNSEl4kQ5weolk/view?usp=share_link  
 My linkedin: https://www.linkedin.com/in/pavel-kernoga/
 
 This is a simple native iOS application that allows users to browse and favourite images fetched from Unsplash API.
