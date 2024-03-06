@@ -7,6 +7,12 @@
 
 import UIKit
 
+private enum Style {
+    static let navigationItemTitle: String = Constants.navigtionBarTitle
+    static let navigtionBarTintColor: UIColor = .black
+    static let navBarLikeButtonImageName: String = Constants.likedImagesIconName
+}
+
 final class ImagesGalleryViewController: UIViewController {
     // MARK: - Private properties
     private var contentView = ImagesGalleryView()
@@ -19,6 +25,7 @@ final class ImagesGalleryViewController: UIViewController {
     // MARK: - Override
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigtionBar()
         view = contentView
         contentView.collectionView.delegate = self
         contentView.collectionView.dataSource = self
@@ -35,6 +42,11 @@ final class ImagesGalleryViewController: UIViewController {
     }
 
     // MARK: - Private functions
+    private func configureNavigtionBar() {
+        navigationItem.title = Style.navigationItemTitle
+        navigationController?.navigationBar.tintColor = Style.navigtionBarTintColor
+    }
+
     private func setupPresenter() {
         if presenter == nil {
             let webService = ImagesGalleryWebService()
@@ -46,8 +58,10 @@ final class ImagesGalleryViewController: UIViewController {
     }
 
     private func configureNavLikeButton() {
-        let image = UIImage(named: Constants.likedImagesIconName)
-        let likeBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(presentFavoritesImages(sender:)))
+        let likeBarButtonItem = UIBarButtonItem(image: UIImage(named: Style.navBarLikeButtonImageName),
+                                                style: .plain,
+                                                target: self,
+                                                action: #selector(presentFavoritesImages(sender:)))
         navigationItem.rightBarButtonItem = nil
         allGalleryElements.forEach { item in
             if item.isLiked {
