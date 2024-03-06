@@ -1,6 +1,6 @@
 identifier_name:
   min_length:
-    warning: 
+    warning: 2
   max_length:
     warning: 40
   excluded:
