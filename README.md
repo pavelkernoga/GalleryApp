@@ -9,8 +9,9 @@ This is a simple native iOS application that allows users to browse and favourit
 ## Additional features implemented beyond the stated requirements:
 - Ability to open all your favorite pictures on a new page.
 
-## Architecture:
-The application is based on MVP architecture, which simplifies its further development, maintenance and testing. Dependency injection is used.
+## Architecture and patterns:
+The application is based on MVP architecture, which simplifies its further development, maintenance and testing. Dependency injection is used.  
+Includes unit tests coverage of certain objects.
 
 ## Key functionalities: 
 ** Image Gallery Screen **
