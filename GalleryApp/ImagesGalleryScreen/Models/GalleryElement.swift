@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct GalleryElement {
+struct GalleryElement: Equatable {
     let id: String?
     let title: String?
     let description: String?

@@ -13,6 +13,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     private var webService: ImagesGalleryWebServiceProtocol
     private var corDataService: ImagesGalleryDataBaseProtocol
     private weak var delegate: ImagesGalleryViewProtocol?
+    private var likedImageItems = [GalleryElement]()
 
     // MARK: - Initialization
     required init(webService: ImagesGalleryWebServiceProtocol,
@@ -55,6 +56,20 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
 
     func deleteGalleryItem(item: GalleryElement) {
         try? self.corDataService.deleteGalleryElement(id: item.id ?? "")
+    }
+
+    func showFavoriteImagesIfNeeded(items: [GalleryElement]) {
+        if !likedImageItems.isEmpty {
+            likedImageItems.removeAll()
+            delegate?.showAllImages()
+            return
+        }
+        items.forEach { item in
+            if item.isLiked {
+                likedImageItems.append(item)
+            }
+        }
+        delegate?.showLikedImages(for: likedImageItems)
     }
 
     // MARK: - Private functions
