@@ -26,5 +26,5 @@ struct Constants {
     static let navigtionBarTitle = "Gallery"
     static let favoriteIconName = "favorite_unselected"
     static let favoriteSelectedIconName = "favorite_selected"
-    static let likedImagesIconName = "liked_images"
+    static let likedImagesIconName = "liked_icon"
 }
