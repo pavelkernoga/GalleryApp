@@ -16,7 +16,7 @@ private enum Style {
 final class ImagesGalleryViewController: UIViewController {
     // MARK: - Private properties
     private var contentView = ImagesGalleryView()
-    private var presenter: ImagesGalleryPresenterProtocol?
+    var presenter: ImagesGalleryPresenterProtocol?
     private var allGalleryElements: [GalleryElement] = []
     private var isDataLoading: Bool = false
     private var pageToload: Int = 1
