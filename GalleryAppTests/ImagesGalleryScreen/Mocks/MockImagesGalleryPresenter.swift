@@ -26,6 +26,6 @@ final class MockImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     
     func deleteGalleryItem(item: GalleryApp.GalleryElement) {}
     
-    func showFavoriteImagesIfNeeded(items: [GalleryApp.GalleryElement]) {}
+    func showFavoriteImagesIfNeeded(elements: [GalleryApp.GalleryElement]) {}
 }
 // swiftlint:disable all

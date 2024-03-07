@@ -69,7 +69,7 @@ final class ImagesGalleryViewController: UIViewController {
     }
 
     @objc func presentFavoritesImages(sender: UIBarButtonItem) {
-        presenter?.showFavoriteImagesIfNeeded(items: allGalleryElements)
+        presenter?.showFavoriteImagesIfNeeded(elements: allGalleryElements)
     }
 }
 
