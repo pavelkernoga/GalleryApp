@@ -10,9 +10,8 @@ import Foundation
 
 // swiftlint:disable all
 final class MockCoreDataService: ImagesGalleryDataBaseProtocol {
-
-    func saveGalleryElement(element: GalleryApp.GalleryElement) throws {}
+    func saveGalleryElement(element: GalleryApp.GalleryElement, completion: @escaping (GalleryApp.CoreDataServiceError?) -> Void) {}
     
-    func deleteGalleryElement(id: String) throws {}
+    func deleteGalleryElement(id: String, completion: @escaping (GalleryApp.CoreDataServiceError?) -> Void) {}
 }
 // swiftlint:enable all

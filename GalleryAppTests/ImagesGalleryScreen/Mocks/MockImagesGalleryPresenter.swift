@@ -22,9 +22,9 @@ final class MockImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     
     func likeUpdated(forIndex index: Int, withValue value: Bool) {}
     
-    func saveGalleryItem(item: GalleryApp.GalleryElement) {}
-    
-    func deleteGalleryItem(item: GalleryApp.GalleryElement) {}
+    func saveGalleryElement(element: GalleryApp.GalleryElement) {}
+
+    func deleteGalleryElement(element: GalleryApp.GalleryElement) {}
     
     func showFavoriteImagesIfNeeded(elements: [GalleryApp.GalleryElement]) {}
 }

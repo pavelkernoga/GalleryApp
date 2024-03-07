@@ -13,7 +13,7 @@ final class MockImagesGalleryViewDelegate: ImagesGalleryViewProtocol {
 
     func updateCollectionView(items: [GalleryApp.GalleryElement]) {}
 
-    func showError(error: GalleryApp.FetchError) {}
+    func showError(error: Error) {}
 
     func updateLike(atIndex index: Int, with value: Bool) {}
 
