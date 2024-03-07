@@ -11,6 +11,11 @@ private enum Style {
     static let navigationItemTitle: String = Constants.navigtionBarTitle
     static let navigtionBarTintColor: UIColor = .black
     static let navBarLikeButtonImageName: String = Constants.likedImagesIconName
+    static let errorAlertTitle: String = "Error"
+    static let uploadPhotosErrorMessage: String = "Cannot upload photos at this time"
+    static let dataBaseErrorMessage: String = "Something went wrong, please try again later"
+    static let unexpectedErrorMessage: String = "An unexpected error occurred"
+    static let errorAlertButtonTitle: String = "OK"
 }
 
 final class ImagesGalleryViewController: UIViewController {
@@ -75,6 +80,23 @@ final class ImagesGalleryViewController: UIViewController {
     @objc func likeButtonTapped(sender: UIBarButtonItem) {
         presenter?.showFavoriteImagesIfNeeded()
     }
+
+    private func setupErrorAlert(title: String, message: String, buttonTitle: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: buttonTitle, style: .default))
+        return alert
+    }
+
+    private func setupErrorMessage(for error: Error) -> String {
+        switch error {
+        case is CoreDataServiceError:
+            return Style.dataBaseErrorMessage
+        case is FetchError:
+            return Style.uploadPhotosErrorMessage
+        default:
+            return Style.unexpectedErrorMessage
+        }
+    }
 }
 
 // MARK: - ImagesGalleryViewProtocol
@@ -96,10 +118,12 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
     }
 
     func showError(error: Error) {
-        let alert = UIAlertController(title: "Error", message: "Cannot upload photos at this time", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
         self.showLoadingIndicator(false)
-        self.present(alert, animated: true)
+        let errorMessage = setupErrorMessage(for: error)
+        let errorAlert = setupErrorAlert(title: Style.errorAlertTitle,
+                                         message: errorMessage,
+                                         buttonTitle: Style.errorAlertButtonTitle)
+        self.present(errorAlert, animated: true)
     }
 
     func updateLike(atIndex index: Int, with value: Bool) {
