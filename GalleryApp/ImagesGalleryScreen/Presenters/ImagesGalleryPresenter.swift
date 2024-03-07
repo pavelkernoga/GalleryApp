@@ -13,7 +13,8 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     private var networkService: Networking
     private var corDataService: DataProcessing
     private weak var view: ImagesGalleryViewProtocol?
-    private var likedImageElements = [GalleryElement]()
+    private var allGalleryElements = [GalleryElement]()
+    private var likedGalleryElements = [GalleryElement]()
 
     // MARK: - Initialization
     required init(networkService: Networking,
@@ -28,7 +29,9 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     func showImagesGallery(_ page: Int) {
         networkService.fetchImages(page: page) { [weak self] imagesItemsResponse, error in
             if let error = error {
-                self?.view?.showError(error: error)
+                DispatchQueue.main.async {
+                    self?.view?.showError(error: error)
+                }
                 return
             }
 
@@ -40,13 +43,22 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     }
 
     func loadMoreImages(_ page: Int) {
-        self.view?.showLoadingIndicator(true)
+        DispatchQueue.main.async {
+            self.view?.showLoadingIndicator(true)
+        }
         DispatchQueue.global(qos: .userInitiated).async {
             self.showImagesGallery(page)
         }
     }
 
-    func likeUpdated(forIndex index: Int, withValue value: Bool) {
+    func didUpdatelike(forIndex index: Int, withValue value: Bool) {
+        allGalleryElements[index].isLiked = value
+        let likedElement = allGalleryElements[index]
+        if value == true {
+            saveGalleryElement(element: likedElement)
+        } else {
+            deleteGalleryElement(element: likedElement)
+        }
         self.view?.updateLike(atIndex: index, with: value)
     }
 
@@ -66,24 +78,25 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         }
     }
 
-    func showFavoriteImagesIfNeeded(elements: [GalleryElement]) {
-        if !likedImageElements.isEmpty {
-            likedImageElements.removeAll()
-            view?.showAllImages()
+    func showFavoriteImagesIfNeeded() {
+        if !likedGalleryElements.isEmpty {
+            likedGalleryElements.removeAll()
+            self.view?.update(with: allGalleryElements, likedElements: likedGalleryElements)
             return
         }
-        elements.forEach { element in
+        allGalleryElements.forEach { element in
             if element.isLiked {
-                likedImageElements.append(element)
+                likedGalleryElements.append(element)
             }
         }
-        view?.showLikedImages(for: likedImageElements)
+        self.view?.update(with: allGalleryElements, likedElements: likedGalleryElements)
     }
 
     // MARK: - Private functions
     private func downloadImages(for items: [ResponseImageItem]) {
         var galleryElements = mappedGalleryElements(items: items)
         let imagesDownloadGroup = DispatchGroup()
+
         for item in items {
             imagesDownloadGroup.enter()
             if let url = URL(string: item.urls.regular) {
@@ -94,16 +107,29 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
                         imagesDownloadGroup.leave()
                     }
                 })
+            } else {
+                imagesDownloadGroup.leave()
             }
         }
         imagesDownloadGroup.notify(queue: .global()) {
-            self.view?.updateCollectionView(items: galleryElements)
+            self.performGalleryElementsUpdate(with: galleryElements)
         }
     }
 
     private func mappedGalleryElements(items: [ResponseImageItem]) -> [GalleryElement] {
         return items.map {
             GalleryElement(id: $0.id, title: $0.title, description: $0.description, url: $0.urls.regular, image: nil, isLiked: false)
+        }
+    }
+
+    private func performGalleryElementsUpdate(with elements: [GalleryElement]) {
+        if !allGalleryElements.isEmpty {
+            allGalleryElements.append(contentsOf: elements)
+        } else {
+            allGalleryElements = elements
+        }
+        DispatchQueue.main.async {
+            self.view?.update(with: self.allGalleryElements, likedElements: self.likedGalleryElements)
         }
     }
 }

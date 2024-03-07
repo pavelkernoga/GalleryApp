@@ -14,8 +14,8 @@ protocol ImagesGalleryPresenterProtocol: AnyObject {
 
     func showImagesGallery(_ page: Int)
     func loadMoreImages(_ page: Int)
-    func likeUpdated(forIndex index: Int, withValue value: Bool)
+    func didUpdatelike(forIndex index: Int, withValue value: Bool)
     func saveGalleryElement(element: GalleryElement)
     func deleteGalleryElement(element: GalleryElement)
-    func showFavoriteImagesIfNeeded(elements: [GalleryElement])
+    func showFavoriteImagesIfNeeded()
 }
