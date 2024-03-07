@@ -50,9 +50,9 @@ final class ImagesGalleryViewController: UIViewController {
     private func setupPresenter() {
         if presenter == nil {
             let webService = ImagesGalleryWebService()
-            let corDataService = ImagesGalleryCoreDataService()
+            let coreDataService = ImagesGalleryCoreDataService()
             presenter = ImagesGalleryPresenter(webService: webService,
-                                               corDataService: corDataService,
+                                               corDataService: coreDataService,
                                                delegate: self)
         }
     }
@@ -63,11 +63,8 @@ final class ImagesGalleryViewController: UIViewController {
                                                 target: self,
                                                 action: #selector(presentFavoritesImages(sender:)))
         navigationItem.rightBarButtonItem = nil
-        allGalleryElements.forEach { item in
-            if item.isLiked {
-                navigationItem.rightBarButtonItem = likeBarButtonItem
-                return
-            }
+        if allGalleryElements.contains(where: { $0.isLiked }) {
+            navigationItem.rightBarButtonItem = likeBarButtonItem
         }
     }
 
