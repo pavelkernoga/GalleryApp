@@ -37,7 +37,7 @@
 		E957C17F2B985813003C83C7 /* ImagesGalleryViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957C17E2B985813003C83C7 /* ImagesGalleryViewControllerTests.swift */; };
 		E957C1812B986168003C83C7 /* ImagesGalleryViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957C1802B986168003C83C7 /* ImagesGalleryViewTests.swift */; };
 		E957C1852B9864A8003C83C7 /* MockImagesGalleryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957C1842B9864A8003C83C7 /* MockImagesGalleryPresenter.swift */; };
-		E957C1872B986563003C83C7 /* MockImagesGalleryNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957C1862B986563003C83C7 /* MockImagesGalleryNetworkService.swift */; };
+		E957C1872B986563003C83C7 /* MockNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957C1862B986563003C83C7 /* MockNetworkService.swift */; };
 		E957C1892B9865BE003C83C7 /* MockImagesGalleryCoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957C1882B9865BE003C83C7 /* MockImagesGalleryCoreDataService.swift */; };
 		E957C18B2B98662A003C83C7 /* MockImagesGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957C18A2B98662A003C83C7 /* MockImagesGalleryViewController.swift */; };
 		E95847AC2B95039D007617C9 /* UIColleectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95847AB2B95039D007617C9 /* UIColleectionView+Extension.swift */; };
@@ -91,7 +91,7 @@
 		E957C17E2B985813003C83C7 /* ImagesGalleryViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesGalleryViewControllerTests.swift; sourceTree = "<group>"; };
 		E957C1802B986168003C83C7 /* ImagesGalleryViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesGalleryViewTests.swift; sourceTree = "<group>"; };
 		E957C1842B9864A8003C83C7 /* MockImagesGalleryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImagesGalleryPresenter.swift; sourceTree = "<group>"; };
-		E957C1862B986563003C83C7 /* MockImagesGalleryNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImagesGalleryNetworkService.swift; sourceTree = "<group>"; };
+		E957C1862B986563003C83C7 /* MockNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkService.swift; sourceTree = "<group>"; };
 		E957C1882B9865BE003C83C7 /* MockImagesGalleryCoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImagesGalleryCoreDataService.swift; sourceTree = "<group>"; };
 		E957C18A2B98662A003C83C7 /* MockImagesGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImagesGalleryViewController.swift; sourceTree = "<group>"; };
 		E95847AB2B95039D007617C9 /* UIColleectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColleectionView+Extension.swift"; sourceTree = "<group>"; };
@@ -307,7 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				E957C1842B9864A8003C83C7 /* MockImagesGalleryPresenter.swift */,
-				E957C1862B986563003C83C7 /* MockImagesGalleryNetworkService.swift */,
+				E957C1862B986563003C83C7 /* MockNetworkService.swift */,
 				E957C1882B9865BE003C83C7 /* MockImagesGalleryCoreDataService.swift */,
 				E957C18A2B98662A003C83C7 /* MockImagesGalleryViewController.swift */,
 			);
@@ -497,7 +497,7 @@
 				E957C17F2B985813003C83C7 /* ImagesGalleryViewControllerTests.swift in Sources */,
 				E957C1892B9865BE003C83C7 /* MockImagesGalleryCoreDataService.swift in Sources */,
 				E957C18B2B98662A003C83C7 /* MockImagesGalleryViewController.swift in Sources */,
-				E957C1872B986563003C83C7 /* MockImagesGalleryNetworkService.swift in Sources */,
+				E957C1872B986563003C83C7 /* MockNetworkService.swift in Sources */,
 				E957C1852B9864A8003C83C7 /* MockImagesGalleryPresenter.swift in Sources */,
 				E957C1812B986168003C83C7 /* ImagesGalleryViewTests.swift in Sources */,
 			);
