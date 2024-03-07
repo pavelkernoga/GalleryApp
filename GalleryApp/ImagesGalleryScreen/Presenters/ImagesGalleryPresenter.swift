@@ -50,12 +50,20 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         self.delegate?.updateLike(atIndex: index, with: value)
     }
 
-    func saveGalleryItem(item: GalleryElement) {
-        try? self.corDataService.saveGalleryElement(element: item)
+    func saveGalleryElement(element: GalleryElement) {
+        corDataService.saveGalleryElement(element: element) { error in
+            if let coreDataError = error {
+                self.delegate?.showError(error: coreDataError)
+            }
+        }
     }
 
-    func deleteGalleryItem(item: GalleryElement) {
-        try? self.corDataService.deleteGalleryElement(id: item.id ?? "")
+    func deleteGalleryElement(element: GalleryElement) {
+        corDataService.deleteGalleryElement(id: element.id ?? "") { error in
+            if let coreDataError = error {
+                self.delegate?.showError(error: coreDataError)
+            }
+        }
     }
 
     func showFavoriteImagesIfNeeded(elements: [GalleryElement]) {
