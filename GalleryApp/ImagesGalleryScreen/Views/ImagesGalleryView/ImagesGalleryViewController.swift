@@ -16,11 +16,13 @@ private enum Style {
 final class ImagesGalleryViewController: UIViewController {
     // MARK: - Private properties
     private var contentView = ImagesGalleryView()
-    var presenter: ImagesGalleryPresenterProtocol?
-    private var allGalleryElements: [GalleryElement] = []
+    private var allGalleryElements = [GalleryElement]()
+    private var likedGalleryElements = [GalleryElement]()
     private var isDataLoading: Bool = false
     private var pageToload: Int = 1
-    private var likedGalleryElements: [GalleryElement] = []
+
+    // MARK: - Properties
+    var presenter: ImagesGalleryPresenterProtocol?
 
     // MARK: - Override
     override func viewDidLoad() {
@@ -36,9 +38,11 @@ final class ImagesGalleryViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        configureNavLikeButton()
-        likedGalleryElements.removeAll()
-        contentView.collectionView.reloadData()
+        self.likedGalleryElements.removeAll()
+        DispatchQueue.main.async {
+            self.configureNavLikeButton()
+            self.contentView.collectionView.reloadData()
+        }
     }
 
     // MARK: - Private functions
@@ -61,79 +65,52 @@ final class ImagesGalleryViewController: UIViewController {
         let likeBarButtonItem = UIBarButtonItem(image: UIImage(named: Style.navBarLikeButtonImageName),
                                                 style: .plain,
                                                 target: self,
-                                                action: #selector(presentFavoritesImages(sender:)))
+                                                action: #selector(likeButtonTapped(sender:)))
         navigationItem.rightBarButtonItem = nil
         if allGalleryElements.contains(where: { $0.isLiked }) {
             navigationItem.rightBarButtonItem = likeBarButtonItem
         }
     }
 
-    @objc func presentFavoritesImages(sender: UIBarButtonItem) {
-        presenter?.showFavoriteImagesIfNeeded(elements: allGalleryElements)
+    @objc func likeButtonTapped(sender: UIBarButtonItem) {
+        presenter?.showFavoriteImagesIfNeeded()
     }
 }
 
 // MARK: - ImagesGalleryViewProtocol
 extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
     func showLoadingIndicator(_ show: Bool) {
-        DispatchQueue.main.async {
-            (show) ? self.contentView.loadingView.startAnimating() : self.contentView.loadingView.stopAnimating()
+        if show == true {
+            self.contentView.loadingView.startAnimating()
+        } else {
+            self.contentView.loadingView.stopAnimating()
         }
     }
-    
-    func updateCollectionView(items: [GalleryElement]) {
-        if !allGalleryElements.isEmpty {
-            for item in items {
-                allGalleryElements.append(item)
-            }
-        } else {
-            allGalleryElements = items
-        }
-        DispatchQueue.main.async {
-            self.contentView.collectionView.reloadData()
-            self.isDataLoading = false
-            self.showLoadingIndicator(false)
-        }
+
+    func update(with allElements: [GalleryElement], likedElements: [GalleryElement]) {
+        allGalleryElements = allElements
+        likedGalleryElements = likedElements
+        isDataLoading = false
+        showLoadingIndicator(false)
+        contentView.collectionView.reloadData()
     }
 
     func showError(error: Error) {
         let alert = UIAlertController(title: "Error", message: "Cannot upload photos at this time", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
-        DispatchQueue.main.async {
-            self.showLoadingIndicator(false)
-            self.present(alert, animated: true)
-        }
+        self.showLoadingIndicator(false)
+        self.present(alert, animated: true)
     }
 
     func updateLike(atIndex index: Int, with value: Bool) {
         allGalleryElements[index].isLiked = value
-    }
-
-    func showLikedImages(for items: [GalleryElement]) {
-        likedGalleryElements = items
-        DispatchQueue.main.async {
-            self.contentView.collectionView.reloadData()
-        }
-    }
-
-    func showAllImages() {
-        likedGalleryElements.removeAll()
-        DispatchQueue.main.async {
-            self.contentView.collectionView.reloadData()
-        }
     }
 }
 
 // MARK: - ImageDetailsViewControllerDelegate
 extension ImagesGalleryViewController: ImageDetailsViewProtocol {
     func didUpdateLike(forIndex index: Int, withValue value: Bool) {
-        presenter?.likeUpdated(forIndex: index, withValue: value)
-        let likedElement = allGalleryElements[index]
-        if value == true {
-            presenter?.saveGalleryElement(element: likedElement)
-            return
-        }
-        presenter?.deleteGalleryElement(element: likedElement)
+        presenter?.didUpdatelike(forIndex: index, withValue: value)
     }
 }
 
@@ -160,7 +137,6 @@ extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionVie
                 cell.isLiked = true
             }
         }
-
         return cell
     }
 
