@@ -96,7 +96,7 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
         }
     }
 
-    func showError(error: FetchError) {
+    func showError(error: Error) {
         let alert = UIAlertController(title: "Error", message: "Cannot upload photos at this time", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
         DispatchQueue.main.async {
@@ -128,12 +128,12 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
 extension ImagesGalleryViewController: ImagesDetailViewControllerDelegate {
     func didUpdateLike(forIndex index: Int, withValue value: Bool) {
         presenter?.likeUpdated(forIndex: index, withValue: value)
-        let likedItem = allGalleryElements[index]
+        let likedElement = allGalleryElements[index]
         if value == true {
-            presenter?.saveGalleryItem(item: likedItem)
+            presenter?.saveGalleryElement(element: likedElement)
             return
         }
-        presenter?.deleteGalleryItem(item: likedItem)
+        presenter?.deleteGalleryElement(element: likedElement)
     }
 }
 
