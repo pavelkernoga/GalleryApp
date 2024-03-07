@@ -39,7 +39,7 @@ final class ImagesGalleryViewControllerTests: XCTestCase {
 
     func testImagesGalleryViewController_WhenCreated_InvokesShowImagesGalleryProcess() {
         // Arrange
-        let mockNetworkService = MockImagesGalleryNetworkService()
+        let mockNetworkService = MockNetworkService()
         let mockCoreDataService = MockImagesGalleryCoreDataService()
         let delegate = MockImagesGalleryViewController()
 

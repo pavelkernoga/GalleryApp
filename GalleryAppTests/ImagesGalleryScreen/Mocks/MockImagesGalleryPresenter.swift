@@ -12,7 +12,7 @@ import Foundation
 final class MockImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     var showImagesGalleryCalled: Bool = false
 
-    init(networkService: GalleryApp.Networking, coreDataService: GalleryApp.DataProcessing, delegate: GalleryApp.ImagesGalleryViewProtocol) {}
+    init(networkService: Networking, coreDataService: DataProcessing, delegate: ImagesGalleryViewProtocol) {}
 
     func showImagesGallery(_ page: Int) {
         showImagesGalleryCalled = true
@@ -20,12 +20,12 @@ final class MockImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     
     func loadMoreImages(_ page: Int) {}
     
-    func likeUpdated(forIndex index: Int, withValue value: Bool) {}
+    func didUpdatelike(forIndex index: Int, withValue value: Bool) {}
     
-    func saveGalleryElement(element: GalleryApp.GalleryElement) {}
+    func saveGalleryElement(element: GalleryElement) {}
 
-    func deleteGalleryElement(element: GalleryApp.GalleryElement) {}
-    
-    func showFavoriteImagesIfNeeded(elements: [GalleryApp.GalleryElement]) {}
+    func deleteGalleryElement(element: GalleryElement) {}
+
+    func showFavoriteImagesIfNeeded() {}
 }
 // swiftlint:disable all
