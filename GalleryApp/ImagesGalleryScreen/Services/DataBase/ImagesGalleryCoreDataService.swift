@@ -13,34 +13,49 @@ final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
     private let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
 
     // MARK: - ImagesGalleryDataBaseProtocol
-    func saveGalleryElement(element: GalleryElement) throws {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func saveGalleryElement(element: GalleryElement, completion: @escaping (CoreDataServiceError?) -> Void) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            completion(CoreDataServiceError.invalidAppDelegate)
+            return
+        }
         let managedContext = appDelegate.persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: Constants.galleryDataEntityName, in: managedContext) else {
+            completion(CoreDataServiceError.invalidEntityContext)
+            return
+        }
+        guard let id = element.id else {
+            completion(CoreDataServiceError.invalidProvidedElementId)
             return
         }
         createFavoriteItemEntity(entity: entity, element: element)
-        do {
-            try managedContext.save()
-            if let entity = try fetchGalleryElement(id: element.id ?? "") {
-                debugPrint("dbg: entity saved to the Core Data: \(entity)")
+        try? managedContext.save()
+        fetchGalleryElement(id: id) { error, entity in
+            if let fetchError = error {
+                completion(CoreDataServiceError.savingError(message: fetchError.localizedDescription))
+                debugPrint("dbg: \(entity as GalleryDataEntity?) cannot be saved to the Core Data")
+                return
             }
-        } catch {
-            throw CoreDataError.fetchingError(message: error.localizedDescription)
+            if let fetchedEntity = entity {
+                debugPrint("dbg: \(fetchedEntity) successfully saved to the Core Data")
+                completion(nil)
+            }
         }
     }
 
-    func deleteGalleryElement(id: String) throws {
-         do {
-             if let entity = try fetchGalleryElement(id: id) {
-                 context?.delete(entity)
-                 try? context?.save()
-                 debugPrint("dbg: entity deleted from Core Data: \(entity)")
-             }
-         } catch {
-             throw CoreDataError.deletingError(message: error.localizedDescription)
-         }
-     }
+    func deleteGalleryElement(id: String, completion: @escaping (CoreDataServiceError?) -> Void) {
+        fetchGalleryElement(id: id) { [weak self] error, entity in
+            if let fetchError = error {
+                completion(CoreDataServiceError.deletingError(message: fetchError.localizedDescription))
+                debugPrint("dbg: \(entity as GalleryDataEntity?) cannot be deleted from Core Data")
+                return
+            }
+            if let fetchedEntity = entity {
+                self?.context?.delete(fetchedEntity)
+                try? self?.context?.save()
+                debugPrint("dbg: \(fetchedEntity) successfully deleted from Core Data")
+            }
+        }
+    }
 
     // MARK: - Private functions
     private func createFavoriteItemEntity(entity: NSEntityDescription, element: GalleryElement) {
@@ -49,14 +64,15 @@ final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
         elementEntity.url = element.url
     }
 
-    private func fetchGalleryElement(id: String) throws -> GalleryDataEntity? {
+    private func fetchGalleryElement(id: String, completion: @escaping(CoreDataServiceError?, GalleryDataEntity?) -> Void) {
         let request: NSFetchRequest<GalleryDataEntity> = GalleryDataEntity.fetchRequest()
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: Constants.predicateFormat, id)
         do {
-            return try context?.fetch(request).first
+            let entity = try context?.fetch(request).first
+            completion(nil, entity)
         } catch {
-            throw CoreDataError.fetchingError(message: error.localizedDescription)
+            completion(CoreDataServiceError.fetchingError, nil)
         }
     }
 }
