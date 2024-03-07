@@ -12,8 +12,8 @@ import Foundation
 final class MockImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     var showImagesGalleryCalled: Bool = false
 
-    init(webService: GalleryApp.ImagesGalleryWebServiceProtocol, corDataService: GalleryApp.ImagesGalleryDataBaseProtocol, delegate: GalleryApp.ImagesGalleryViewProtocol) {}
-    
+    init(networkService: GalleryApp.Networking, coreDataService: GalleryApp.DataProcessing, delegate: GalleryApp.ImagesGalleryViewProtocol) {}
+
     func showImagesGallery(_ page: Int) {
         showImagesGalleryCalled = true
     }

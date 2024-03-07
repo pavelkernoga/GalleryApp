@@ -49,10 +49,10 @@ final class ImagesGalleryViewController: UIViewController {
 
     private func setupPresenter() {
         if presenter == nil {
-            let webService = ImagesGalleryWebService()
+            let networkService = NetworkService()
             let coreDataService = ImagesGalleryCoreDataService()
-            presenter = ImagesGalleryPresenter(webService: webService,
-                                               corDataService: coreDataService,
+            presenter = ImagesGalleryPresenter(networkService: networkService,
+                                               coreDataService: coreDataService,
                                                delegate: self)
         }
     }
@@ -124,8 +124,8 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
     }
 }
 
-// MARK: - ImagesDetailViewControllerDelegate
-extension ImagesGalleryViewController: ImagesDetailViewControllerDelegate {
+// MARK: - ImageDetailsViewControllerDelegate
+extension ImagesGalleryViewController: ImageDetailsViewProtocol {
     func didUpdateLike(forIndex index: Int, withValue value: Bool) {
         presenter?.likeUpdated(forIndex: index, withValue: value)
         let likedElement = allGalleryElements[index]
@@ -165,7 +165,7 @@ extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let imagesDetailViewController = ImagesDetailViewController()
+        let imagesDetailViewController = ImageDetailsViewController()
         imagesDetailViewController.selectedImageIndexPath = indexPath
         imagesDetailViewController.allGalleryElements = allGalleryElements
         imagesDetailViewController.delegate = self

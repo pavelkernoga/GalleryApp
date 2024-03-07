@@ -61,8 +61,8 @@ final class ImagesGalleryCell: UICollectionViewCell {
     }
 }
 
-// MARK: - ViewSetupProtocol
-extension ImagesGalleryCell: ViewSetupProtocol {
+// MARK: - ViewBuildable
+extension ImagesGalleryCell: ViewBuildable {
     func setupHierarchy() {
         contentView.addSubviews([imageView, favoriteIndicatorImageView])
     }

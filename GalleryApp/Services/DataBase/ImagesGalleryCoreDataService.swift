@@ -8,11 +8,11 @@
 import UIKit
 import CoreData
 
-final class ImagesGalleryCoreDataService: ImagesGalleryDataBaseProtocol {
+final class ImagesGalleryCoreDataService: DataProcessing {
     // MARK: - Private properties
     private let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
 
-    // MARK: - ImagesGalleryDataBaseProtocol
+    // MARK: - CoreDataProcessing
     func saveGalleryElement(element: GalleryElement, completion: @escaping (CoreDataServiceError?) -> Void) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             completion(CoreDataServiceError.invalidAppDelegate)

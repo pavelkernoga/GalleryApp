@@ -1,5 +1,5 @@
 //
-//  MockImagesGalleryViewDelegate.swift
+//  MockImagesGalleryViewController.swift
 //  GalleryAppTests
 //
 //  Created by pavel on 6.03.24.
@@ -8,7 +8,7 @@
 import Foundation
 @testable import GalleryApp
 
-final class MockImagesGalleryViewDelegate: ImagesGalleryViewProtocol {
+final class MockImagesGalleryViewController: ImagesGalleryViewProtocol {
     func showLoadingIndicator(_ show: Bool) {}
 
     func updateCollectionView(items: [GalleryApp.GalleryElement]) {}

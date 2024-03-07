@@ -39,12 +39,12 @@ final class ImagesGalleryViewControllerTests: XCTestCase {
 
     func testImagesGalleryViewController_WhenCreated_InvokesShowImagesGalleryProcess() {
         // Arrange
-        let mockWebService = MockImagesGalleryWebService()
-        let mockCorDataService = MockCoreDataService()
-        let delegate = MockImagesGalleryViewDelegate()
+        let mockNetworkService = MockImagesGalleryNetworkService()
+        let mockCoreDataService = MockImagesGalleryCoreDataService()
+        let delegate = MockImagesGalleryViewController()
 
-        let mockImagesGalleryPresenter = MockImagesGalleryPresenter(webService: mockWebService,
-                                                             corDataService: mockCorDataService,
+        let mockImagesGalleryPresenter = MockImagesGalleryPresenter(networkService: mockNetworkService,
+                                                             coreDataService: mockCoreDataService,
                                                              delegate: delegate)
         // inject mockImagesGalleryPresenter in to View controller based dependency injection
         sut.presenter = mockImagesGalleryPresenter

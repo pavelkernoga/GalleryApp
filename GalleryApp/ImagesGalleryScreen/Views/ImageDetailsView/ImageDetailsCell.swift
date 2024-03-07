@@ -1,5 +1,5 @@
 //
-//  ImagesDetailCell.swift
+//  ImageDetailsCell.swift
 //  GalleryApp
 //
 //  Created by pavel on 4.03.24.
@@ -16,7 +16,7 @@ private enum Style {
     static let favoriteImage = UIImage(named: Constants.favoriteIconName)
 }
 
-final class ImagesDetailCell: UICollectionViewCell {
+final class ImageDetailsCell: UICollectionViewCell {
     // MARK: - Private properties
     var imageTitleLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: CGFloat.greatestFiniteMagnitude))
@@ -96,8 +96,8 @@ final class ImagesDetailCell: UICollectionViewCell {
     }
 }
 
-// MARK: - ViewSetupProtocol
-extension ImagesDetailCell: ViewSetupProtocol {
+// MARK: - ViewBuildable
+extension ImageDetailsCell: ViewBuildable {
     func setupHierarchy() {
         contentView.addSubviews([imageTitleLabel, imageDescriptionLabel, imageView, likeButton])
     }

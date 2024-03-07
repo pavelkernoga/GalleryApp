@@ -1,5 +1,5 @@
 //
-//  ImagesDetailViewController.swift
+//  ImageDetailsViewController.swift
 //  GalleryApp
 //
 //  Created by pavel on 4.03.24.
@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class ImagesDetailViewController: UIViewController {
+final class ImageDetailsViewController: UIViewController {
     // MARK: - Private properties
-    private var contentView = ImagesDetailView()
+    private var contentView = ImageDetailsView()
     
     // MARK: - Properties
     var allGalleryElements: [GalleryElement]!
     var selectedImageIndexPath: IndexPath!
-    weak var delegate: ImagesDetailViewControllerDelegate?
+    weak var delegate: ImageDetailsViewProtocol?
     
     // MARK: - Ovveride
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ final class ImagesDetailViewController: UIViewController {
     
     @objc private func likeButtonTaped(sender: UIButton) {
         if let indexPath = contentView.collectionView.indexPathsForVisibleItems.first,
-           let cell = contentView.collectionView.cellForItem(at: indexPath) as? ImagesDetailCell {
+           let cell = contentView.collectionView.cellForItem(at: indexPath) as? ImageDetailsCell {
             cell.isLiked.toggle()
             cell.onLikeToggle?(cell.isLiked)
             delegate?.didUpdateLike(forIndex: indexPath.row, withValue: cell.isLiked)
@@ -49,13 +49,13 @@ final class ImagesDetailViewController: UIViewController {
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
-extension ImagesDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ImageDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return allGalleryElements.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.imagesDetailCell, for: indexPath) as? ImagesDetailCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.imageDetailsCell, for: indexPath) as? ImageDetailsCell else {
             return UICollectionViewCell()
         }
         cell.imageTitleLabel.text = allGalleryElements[indexPath.row].title

@@ -10,25 +10,25 @@ import UIKit
 
 final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     // MARK: - Private properties
-    private var webService: ImagesGalleryWebServiceProtocol
-    private var corDataService: ImagesGalleryDataBaseProtocol
-    private weak var delegate: ImagesGalleryViewProtocol?
+    private var networkService: Networking
+    private var corDataService: DataProcessing
+    private weak var view: ImagesGalleryViewProtocol?
     private var likedImageElements = [GalleryElement]()
 
     // MARK: - Initialization
-    required init(webService: ImagesGalleryWebServiceProtocol,
-                  corDataService: ImagesGalleryDataBaseProtocol,
+    required init(networkService: Networking,
+                  coreDataService: DataProcessing,
                   delegate: ImagesGalleryViewProtocol) {
-        self.webService = webService
-        self.corDataService = corDataService
-        self.delegate = delegate
+        self.networkService = networkService
+        self.corDataService = coreDataService
+        self.view = delegate
     }
 
     // MARK: - ImagesGalleryPresenterProtocol
     func showImagesGallery(_ page: Int) {
-        webService.fetchImages(page: page) { [weak self] imagesItemsResponse, error in
+        networkService.fetchImages(page: page) { [weak self] imagesItemsResponse, error in
             if let error = error {
-                self?.delegate?.showError(error: error)
+                self?.view?.showError(error: error)
                 return
             }
 
@@ -40,20 +40,20 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     }
 
     func loadMoreImages(_ page: Int) {
-        self.delegate?.showLoadingIndicator(true)
+        self.view?.showLoadingIndicator(true)
         DispatchQueue.global(qos: .userInitiated).async {
             self.showImagesGallery(page)
         }
     }
 
     func likeUpdated(forIndex index: Int, withValue value: Bool) {
-        self.delegate?.updateLike(atIndex: index, with: value)
+        self.view?.updateLike(atIndex: index, with: value)
     }
 
     func saveGalleryElement(element: GalleryElement) {
         corDataService.saveGalleryElement(element: element) { error in
             if let coreDataError = error {
-                self.delegate?.showError(error: coreDataError)
+                self.view?.showError(error: coreDataError)
             }
         }
     }
@@ -61,7 +61,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     func deleteGalleryElement(element: GalleryElement) {
         corDataService.deleteGalleryElement(id: element.id ?? "") { error in
             if let coreDataError = error {
-                self.delegate?.showError(error: coreDataError)
+                self.view?.showError(error: coreDataError)
             }
         }
     }
@@ -69,7 +69,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     func showFavoriteImagesIfNeeded(elements: [GalleryElement]) {
         if !likedImageElements.isEmpty {
             likedImageElements.removeAll()
-            delegate?.showAllImages()
+            view?.showAllImages()
             return
         }
         elements.forEach { element in
@@ -77,7 +77,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
                 likedImageElements.append(element)
             }
         }
-        delegate?.showLikedImages(for: likedImageElements)
+        view?.showLikedImages(for: likedImageElements)
     }
 
     // MARK: - Private functions
@@ -87,7 +87,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         for item in items {
             imagesDownloadGroup.enter()
             if let url = URL(string: item.urls.regular) {
-                self.webService.getCellImage(with: url, completion: { image in
+                self.networkService.getCellImage(with: url, completion: { image in
                     if let downloadedImage = image,
                        let imageIndex = galleryElements.firstIndex(where: {$0.id == item.id}) {
                         galleryElements[imageIndex].image = downloadedImage
@@ -97,7 +97,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
             }
         }
         imagesDownloadGroup.notify(queue: .global()) {
-            self.delegate?.updateCollectionView(items: galleryElements)
+            self.view?.updateCollectionView(items: galleryElements)
         }
     }
 

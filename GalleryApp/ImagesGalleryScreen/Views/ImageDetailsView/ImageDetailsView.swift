@@ -1,5 +1,5 @@
 //
-//  ImagesDetailView.swift
+//  ImageDetailsView.swift
 //  GalleryApp
 //
 //  Created by pavel on 4.03.24.
@@ -11,11 +11,11 @@ private enum Style {
     static let collectionViewBackgroundColor: UIColor = .white
 }
 
-final class ImagesDetailView: UIView {
+final class ImageDetailsView: UIView {
     // MARK: - Private properties
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout() )
-        view.register(ImagesDetailCell.self, forCellWithReuseIdentifier: "ImagesDetailCell")
+        view.register(ImageDetailsCell.self, forCellWithReuseIdentifier: "ImageDetailsCell")
         view.backgroundColor = Style.collectionViewBackgroundColor
         view.isPagingEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -43,8 +43,8 @@ final class ImagesDetailView: UIView {
     }
 }
 
-// MARK: - ViewSetupProtocol
-extension ImagesDetailView: ViewSetupProtocol {
+// MARK: - ViewBuildable
+extension ImageDetailsView: ViewBuildable {
     func setupHierarchy() {
         addSubview(collectionView)
     }

@@ -1,5 +1,5 @@
 //
-//  ViewSetupProtocol.swift
+//  ViewBuildable.swift
 //  GalleryApp
 //
 //  Created by pavel on 2.03.24.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol ViewSetupProtocol {
+protocol ViewBuildable {
     func setupHierarchy()
     func setupConstraints()
     func buildView()
 }
 
-extension ViewSetupProtocol {
+extension ViewBuildable {
     func buildView() {
         setupHierarchy()
         setupConstraints()

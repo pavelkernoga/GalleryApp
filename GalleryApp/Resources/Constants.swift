@@ -20,7 +20,7 @@ struct Constants {
 
     // MARK: - UICollectionViewCell constants
     static let imageGalleryCell = "ImageGalleryCell"
-    static let imagesDetailCell = "ImagesDetailCell"
+    static let imageDetailsCell = "ImagesDetailCell"
 
     // MARK: - UI elements constants
     static let navigtionBarTitle = "Gallery"

@@ -8,8 +8,8 @@
 import UIKit
 
 protocol ImagesGalleryPresenterProtocol: AnyObject {
-    init(webService: ImagesGalleryWebServiceProtocol,
-         corDataService: ImagesGalleryDataBaseProtocol,
+    init(networkService: Networking,
+         coreDataService: DataProcessing,
          delegate: ImagesGalleryViewProtocol)
 
     func showImagesGallery(_ page: Int)

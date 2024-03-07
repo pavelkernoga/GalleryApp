@@ -53,8 +53,8 @@ final class ImagesGalleryView: UIView {
     }
 }
 
-// MARK: - ViewSetupProtocol
-extension ImagesGalleryView: ViewSetupProtocol {
+// MARK: - ViewBuildable
+extension ImagesGalleryView: ViewBuildable {
     func setupHierarchy() {
         addSubviews([collectionView, loadingView])
     }

@@ -1,5 +1,5 @@
 //
-//  ImagesGalleryWebService.swift
+//  NetworkService.swift
 //  GalleryApp
 //
 //  Created by pavel on 2.03.24.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
+final class NetworkService: Networking {
     // MARK: - Private properties
     private var apiUrlString: String = {
         let string = Constants.apiEndPointBaseUrl + Constants.accessToken + Constants.itemsCount + Constants.pageToLoad
@@ -25,7 +25,7 @@ final class ImagesGalleryWebService: ImagesGalleryWebServiceProtocol {
     private let cache = NSCache<NSString, UIImage>()
     private var responses = [URL: [(UIImage?) -> Void]]()
 
-    // MARK: - ImagesGalleryWebServiceProtocol
+    // MARK: - Networking
     func fetchImages(page: Int, completion: @escaping ([ResponseImageItem]?, FetchError?) -> Void) {
         guard let url = URL(string: apiUrlString + String(page)) else {
             completion(nil, FetchError.invalidRequestURLString)
