@@ -8,6 +8,6 @@
 import Foundation
 
 protocol ImagesGalleryDataBaseProtocol {
-    func saveGalleryElement(element: GalleryElement) throws
-    func deleteGalleryElement(id: String) throws
+    func saveGalleryElement(element: GalleryElement, completion: @escaping(CoreDataServiceError?) -> Void)
+    func deleteGalleryElement(id: String, completion: @escaping(CoreDataServiceError?) -> Void)
 }
