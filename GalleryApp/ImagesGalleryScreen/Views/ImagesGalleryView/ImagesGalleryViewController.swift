@@ -13,7 +13,7 @@ private enum Style {
     static let navBarLikeButtonImageName: String = Constants.likedImagesIconName
     static let errorAlertTitle: String = "Error"
     static let uploadPhotosErrorMessage: String = "Cannot upload photos at this time"
-    static let dataBaseErrorMessage: String = "Something went wrong, please try again later"
+    static let dataBaseErrorMessage: String = "Oops, something went wrong"
     static let unexpectedErrorMessage: String = "An unexpected error occurred"
     static let errorAlertButtonTitle: String = "OK"
 }
@@ -112,6 +112,7 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
     func update(with allElements: [GalleryElement], likedElements: [GalleryElement]) {
         allGalleryElements = allElements
         likedGalleryElements = likedElements
+        configureNavLikeButton()
         isDataLoading = false
         showLoadingIndicator(false)
         contentView.collectionView.reloadData()
