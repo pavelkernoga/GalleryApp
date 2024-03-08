@@ -5,7 +5,7 @@
 //  Created by pavel on 6.03.24.
 //
 
-import Foundation
+import UIKit
 @testable import GalleryApp
 
 // swiftlint:disable all
@@ -28,16 +28,24 @@ final class MockImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
 
     func showFavoriteImagesIfNeeded() {}
 
-    func containsLikedElements() -> Bool {}
+    func containsLikedElements() -> Bool {
+        return false
+    }
 
     func updateLike(atIndex index: Int, with value: Bool) {}
 
-    func getCellsCount() -> Int { }
+    func getCellsCount() -> Int { 
+        return .zero
+    }
 
     func configureCell(cell: GalleryApp.ImagesGalleryCell, indexPath: IndexPath) {}
 
-    func setupDetailsViewController(for indexPath: IndexPath) -> GalleryApp.ImageDetailsViewController {}
+    func setupDetailsViewController(for indexPath: IndexPath) -> ImageDetailsViewController {
+        return UIViewController() as! ImageDetailsViewController
+    }
 
-    func likedElementsIsEmpty() -> Bool {}
+    func likedElementsIsEmpty() -> Bool {
+        return false
+    }
 }
 // swiftlint:disable all
