@@ -11,7 +11,7 @@ import Foundation
 final class MockImagesGalleryViewController: ImagesGalleryViewProtocol {
     func showLoadingIndicator(_ show: Bool) {}
 
-    func update(with allElements: [GalleryElement], likedElements: [GalleryElement]) {}
+    func update() {}
 
     func showError(error: Error) {}
 

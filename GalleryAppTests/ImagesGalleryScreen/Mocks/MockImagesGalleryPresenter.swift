@@ -27,5 +27,17 @@ final class MockImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     func deleteGalleryElement(element: GalleryElement) {}
 
     func showFavoriteImagesIfNeeded() {}
+
+    func containsLikedElements() -> Bool {}
+
+    func updateLike(atIndex index: Int, with value: Bool) {}
+
+    func getCellsCount() -> Int { }
+
+    func configureCell(cell: GalleryApp.ImagesGalleryCell, indexPath: IndexPath) {}
+
+    func setupDetailsViewController(for indexPath: IndexPath) -> GalleryApp.ImageDetailsViewController {}
+
+    func likedElementsIsEmpty() -> Bool {}
 }
 // swiftlint:disable all
