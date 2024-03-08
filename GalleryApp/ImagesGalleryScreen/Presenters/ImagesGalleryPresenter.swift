@@ -6,22 +6,22 @@
 //
 
 import Foundation
-import UIKit
 
 final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     // MARK: - Private properties
     private var networkService: Networking
-    private var corDataService: DataProcessing
+    private var coreDataService: DataProcessing
     private weak var view: ImagesGalleryViewProtocol?
     private var allGalleryElements = [GalleryElement]()
     private var likedGalleryElements = [GalleryElement]()
+    private var likedElementsIDs = [String]()
 
     // MARK: - Initialization
     required init(networkService: Networking,
                   coreDataService: DataProcessing,
                   delegate: ImagesGalleryViewProtocol) {
         self.networkService = networkService
-        self.corDataService = coreDataService
+        self.coreDataService = coreDataService
         self.view = delegate
     }
 
@@ -36,8 +36,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
             }
 
             if let imagesItems = imagesItemsResponse {
-                self?.downloadImages(for: imagesItems)
-                return
+                self?.prepareImagesElements(with: imagesItems)
             }
         }
     }
@@ -63,7 +62,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     }
 
     func saveGalleryElement(element: GalleryElement) {
-        corDataService.saveGalleryElement(element: element) { error in
+        coreDataService.saveGalleryElement(element: element) { error in
             if let coreDataError = error {
                 self.view?.showError(error: coreDataError)
             }
@@ -71,7 +70,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     }
 
     func deleteGalleryElement(element: GalleryElement) {
-        corDataService.deleteGalleryElement(id: element.id ?? "") { error in
+        coreDataService.deleteGalleryElement(id: element.id ?? "") { error in
             if let coreDataError = error {
                 self.view?.showError(error: coreDataError)
             }
@@ -93,6 +92,30 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     }
 
     // MARK: - Private functions
+    private func prepareImagesElements(with items: [ResponseImageItem]) {
+        updateLikedElements(with: items, completion: { error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.view?.showError(error: error)
+                }
+            }
+        })
+        downloadImages(for: items)
+    }
+
+    private func updateLikedElements(with items: [ResponseImageItem], completion: @escaping(CoreDataServiceError?) -> Void) {
+        self.getSavedIDsFromDB(for: items, completion: { response, error in
+            if let error = error {
+                debugPrint("dbg: An error occured while fetching saved iDs from Core Data")
+                completion(CoreDataServiceError.fetchingError)
+            }
+            if let savedIDs = response {
+                self.likedElementsIDs = savedIDs
+                completion(nil)
+            }
+        })
+    }
+
     private func downloadImages(for items: [ResponseImageItem]) {
         var galleryElements = mappedGalleryElements(items: items)
         let imagesDownloadGroup = DispatchGroup()
@@ -122,14 +145,40 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         }
     }
 
+    private func updateGalleryItemsWithLiked(items: [GalleryElement]) -> [GalleryElement] {
+        return items.map { element in
+            var updatedElement = element
+            if let id = element.id, likedElementsIDs.contains(id) {
+                updatedElement.isLiked = true
+            }
+            return updatedElement
+        }
+    }
+
     private func performGalleryElementsUpdate(with elements: [GalleryElement]) {
         if !allGalleryElements.isEmpty {
             allGalleryElements.append(contentsOf: elements)
         } else {
             allGalleryElements = elements
         }
+        let updatedGalleryElements = updateGalleryItemsWithLiked(items: allGalleryElements)
+        allGalleryElements = updatedGalleryElements
+
         DispatchQueue.main.async {
-            self.view?.update(with: self.allGalleryElements, likedElements: self.likedGalleryElements)
+            self.view?.update(with: updatedGalleryElements, likedElements: self.likedGalleryElements)
+        }
+    }
+
+    private func getSavedIDsFromDB(for items: [ResponseImageItem], completion: @escaping([String]?, CoreDataServiceError?) -> Void) {
+        var loadedImagesIDs = [String]()
+        items.forEach { item in
+            loadedImagesIDs.append(item.id)
+        }
+        self.coreDataService.getLikedImagesIDs(idToCompare: loadedImagesIDs) { result, error in
+            if let error = error {
+                completion(nil, CoreDataServiceError.fetchingError)
+            }
+            completion(result, nil)
         }
     }
 }
