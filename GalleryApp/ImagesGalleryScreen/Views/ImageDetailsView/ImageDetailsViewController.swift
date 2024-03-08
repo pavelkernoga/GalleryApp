@@ -12,9 +12,24 @@ final class ImageDetailsViewController: UIViewController {
     private var contentView = ImageDetailsView()
     
     // MARK: - Properties
-    var allGalleryElements: [GalleryElement]!
-    var selectedImageIndexPath: IndexPath!
+    var allGalleryElements: [GalleryElement]
+    var likedGalleryElements: [GalleryElement]
+    var selectedImageIndexPath: IndexPath
     weak var delegate: ImageDetailsViewProtocol?
+
+    // MARK: - Initialization
+    init(contentView: ImageDetailsView = ImageDetailsView(), allGalleryElements: [GalleryElement], likedGalleryElements: [GalleryElement], selectedImageIndexPath: IndexPath!, delegate: ImageDetailsViewProtocol? = nil) {
+        self.contentView = contentView
+        self.allGalleryElements = allGalleryElements
+        self.likedGalleryElements = likedGalleryElements
+        self.selectedImageIndexPath = selectedImageIndexPath
+        self.delegate = delegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Ovveride
     override func viewDidLoad() {
@@ -46,11 +61,26 @@ final class ImageDetailsViewController: UIViewController {
             delegate?.didUpdateLike(forIndex: indexPath.row, withValue: cell.isLiked)
         }
     }
+
+    private func configureCell(with elements: [GalleryElement], cell: ImageDetailsCell, indexPath: IndexPath) {
+        cell.imageTitleLabel.text = elements[indexPath.row].title
+        cell.imageTitleLabel.text?.capitalizeFirstLetter()
+        cell.imageDescriptionLabel.text = elements[indexPath.row].description
+        cell.imageDescriptionLabel.text?.capitalizeFirstLetter()
+        cell.imageView.image = elements[indexPath.row].image
+        if elements[indexPath.row].isLiked {
+            cell.isLiked = true
+        }
+        cell.likeButton.addTarget(self, action: #selector(likeButtonTaped), for: .touchUpInside)
+    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension ImageDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if !likedGalleryElements.isEmpty {
+            return likedGalleryElements.count
+        }
         return allGalleryElements.count
     }
     
@@ -58,18 +88,14 @@ extension ImageDetailsViewController: UICollectionViewDelegate, UICollectionView
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.imageDetailsCell, for: indexPath) as? ImageDetailsCell else {
             return UICollectionViewCell()
         }
-        cell.imageTitleLabel.text = allGalleryElements[indexPath.row].title
-        cell.imageTitleLabel.text?.capitalizeFirstLetter()
-        cell.imageDescriptionLabel.text = allGalleryElements[indexPath.row].description
-        cell.imageDescriptionLabel.text?.capitalizeFirstLetter()
-        cell.imageView.image = allGalleryElements[indexPath.row].image
-        if allGalleryElements[indexPath.row].isLiked {
-            cell.isLiked = true
+        if !likedGalleryElements.isEmpty {
+            configureCell(with: likedGalleryElements, cell: cell, indexPath: indexPath)
+        } else {
+            configureCell(with: allGalleryElements, cell: cell, indexPath: indexPath)
         }
-        cell.likeButton.addTarget(self, action: #selector(likeButtonTaped), for: .touchUpInside)
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let collectionViewFrame = collectionView.frame
         return CGSize(width: collectionViewFrame.width, height: collectionViewFrame.height)

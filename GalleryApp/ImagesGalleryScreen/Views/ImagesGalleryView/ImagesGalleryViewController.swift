@@ -166,9 +166,9 @@ extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let imagesDetailViewController = ImageDetailsViewController()
-        imagesDetailViewController.selectedImageIndexPath = indexPath
-        imagesDetailViewController.allGalleryElements = allGalleryElements
+        let imagesDetailViewController = ImageDetailsViewController(allGalleryElements: allGalleryElements,
+                                                                    likedGalleryElements: likedGalleryElements,
+                                                                    selectedImageIndexPath: indexPath)
         imagesDetailViewController.delegate = self
         navigationController?.pushViewController(imagesDetailViewController, animated: true)
     }
