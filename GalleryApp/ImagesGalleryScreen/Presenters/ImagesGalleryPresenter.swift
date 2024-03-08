@@ -91,6 +91,51 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         self.view?.update(with: allGalleryElements, likedElements: likedGalleryElements)
     }
 
+    func containsLikedElements() -> Bool {
+        if allGalleryElements.contains(where: { $0.isLiked }) {
+            return true
+        }
+        return false
+    }
+
+    func updateLike(atIndex index: Int, with value: Bool) {
+        allGalleryElements[index].isLiked = value
+    }
+
+    func getCellsCount() -> Int {
+        if !likedGalleryElements.isEmpty {
+            return likedGalleryElements.count
+        }
+        return allGalleryElements.count
+    }
+
+    func configureCell(cell: ImagesGalleryCell, indexPath: IndexPath) {
+        if !likedGalleryElements.isEmpty,
+           likedGalleryElements[indexPath.row].isLiked {
+            cell.isLiked = true
+            cell.imageView.image = likedGalleryElements[indexPath.row].image
+        } else {
+            cell.imageView.image = allGalleryElements[indexPath.row].image
+            if allGalleryElements[indexPath.row].isLiked {
+                cell.isLiked = true
+            }
+        }
+    }
+
+    func setupDetailsViewController(for indexPath: IndexPath) -> ImageDetailsViewController {
+        let imagesDetailViewController = ImageDetailsViewController(allGalleryElements: allGalleryElements,
+                                                                    likedGalleryElements: likedGalleryElements,
+                                                                    selectedImageIndexPath: indexPath)
+        return imagesDetailViewController
+    }
+
+    func likedElementsIsEmpty() -> Bool {
+        if likedGalleryElements.isEmpty {
+            return true
+        }
+        return false
+    }
+
     // MARK: - Private functions
     private func prepareImagesElements(with items: [ResponseImageItem]) {
         updateLikedElements(with: items, completion: { error in
