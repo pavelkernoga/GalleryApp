@@ -13,5 +13,7 @@ final class MockImagesGalleryCoreDataService: DataProcessing {
     func saveGalleryElement(element: GalleryApp.GalleryElement, completion: @escaping (GalleryApp.CoreDataServiceError?) -> Void) {}
     
     func deleteGalleryElement(id: String, completion: @escaping (GalleryApp.CoreDataServiceError?) -> Void) {}
+
+    func getLikedImagesIDs(idToCompare: [String], completion: @escaping ([String]?, GalleryApp.CoreDataServiceError?) -> Void) {}
 }
 // swiftlint:enable all
