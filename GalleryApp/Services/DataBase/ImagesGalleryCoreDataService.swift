@@ -31,8 +31,8 @@ final class ImagesGalleryCoreDataService: DataProcessing {
         try? managedContext.save()
         fetchGalleryElement(id: id) { error, entity in
             if let fetchError = error {
-                completion(CoreDataServiceError.savingError(message: fetchError.localizedDescription))
                 debugPrint("dbg: \(entity as GalleryDataEntity?) cannot be saved to the Core Data")
+                completion(CoreDataServiceError.savingError(message: fetchError.localizedDescription))
                 return
             }
             if let fetchedEntity = entity {
@@ -55,6 +55,22 @@ final class ImagesGalleryCoreDataService: DataProcessing {
                 debugPrint("dbg: \(fetchedEntity) successfully deleted from Core Data")
             }
         }
+    }
+
+    func getLikedImagesIDs(idToCompare: [String], completion: @escaping ([String]?, CoreDataServiceError?) -> Void) {
+        var resultIDs = [String]()
+        idToCompare.forEach { id in
+            fetchGalleryElement(id: id) { error, entity in
+                if let error = error {
+                    completion(nil, CoreDataServiceError.fetchingError)
+                }
+                if let entityId = entity?.id,
+                   entityId == id {
+                    resultIDs.append(entityId)
+                }
+            }
+        }
+        completion(resultIDs, nil)
     }
 
     // MARK: - Private functions
