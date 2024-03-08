@@ -18,4 +18,10 @@ protocol ImagesGalleryPresenterProtocol: AnyObject {
     func saveGalleryElement(element: GalleryElement)
     func deleteGalleryElement(element: GalleryElement)
     func showFavoriteImagesIfNeeded()
+    func containsLikedElements() -> Bool
+    func updateLike(atIndex index: Int, with value: Bool)
+    func getCellsCount() -> Int
+    func configureCell(cell: ImagesGalleryCell, indexPath: IndexPath)
+    func setupDetailsViewController(for indexPath: IndexPath) -> ImageDetailsViewController
+    func likedElementsIsEmpty() -> Bool
 }
