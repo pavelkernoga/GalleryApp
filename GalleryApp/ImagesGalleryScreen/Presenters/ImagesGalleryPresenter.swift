@@ -80,7 +80,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
     func showFavoriteImagesIfNeeded() {
         if !likedGalleryElements.isEmpty {
             likedGalleryElements.removeAll()
-            self.view?.update(with: allGalleryElements, likedElements: likedGalleryElements)
+            self.view?.update()
             return
         }
         allGalleryElements.forEach { element in
@@ -88,7 +88,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
                 likedGalleryElements.append(element)
             }
         }
-        self.view?.update(with: allGalleryElements, likedElements: likedGalleryElements)
+        self.view?.update()
     }
 
     func containsLikedElements() -> Bool {
@@ -210,7 +210,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
         allGalleryElements = updatedGalleryElements
 
         DispatchQueue.main.async {
-            self.view?.update(with: updatedGalleryElements, likedElements: self.likedGalleryElements)
+            self.view?.update()
         }
     }
 

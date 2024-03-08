@@ -9,7 +9,7 @@ import UIKit
 
 protocol ImagesGalleryViewProtocol: AnyObject {
     func showLoadingIndicator(_ show: Bool)
-    func update(with allElements: [GalleryElement], likedElements: [GalleryElement])
+    func update()
     func showError(error: Error)
     func updateLike(atIndex index: Int, with value: Bool)
 }
