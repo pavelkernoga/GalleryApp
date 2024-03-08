@@ -21,8 +21,6 @@ private enum Style {
 final class ImagesGalleryViewController: UIViewController {
     // MARK: - Private properties
     private var contentView = ImagesGalleryView()
-    private var allGalleryElements = [GalleryElement]()
-    private var likedGalleryElements = [GalleryElement]()
     private var isDataLoading: Bool = false
     private var pageToload: Int = 1
 
@@ -43,7 +41,6 @@ final class ImagesGalleryViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        self.likedGalleryElements.removeAll()
         DispatchQueue.main.async {
             self.configureNavLikeButton()
             self.contentView.collectionView.reloadData()
@@ -72,7 +69,7 @@ final class ImagesGalleryViewController: UIViewController {
                                                 target: self,
                                                 action: #selector(likeButtonTapped(sender:)))
         navigationItem.rightBarButtonItem = nil
-        if allGalleryElements.contains(where: { $0.isLiked }) {
+        if presenter?.containsLikedElements() == true {
             navigationItem.rightBarButtonItem = likeBarButtonItem
         }
     }
@@ -109,9 +106,7 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
         }
     }
 
-    func update(with allElements: [GalleryElement], likedElements: [GalleryElement]) {
-        allGalleryElements = allElements
-        likedGalleryElements = likedElements
+    func update() {
         configureNavLikeButton()
         isDataLoading = false
         showLoadingIndicator(false)
@@ -128,7 +123,7 @@ extension ImagesGalleryViewController: ImagesGalleryViewProtocol {
     }
 
     func updateLike(atIndex index: Int, with value: Bool) {
-        allGalleryElements[index].isLiked = value
+        presenter?.updateLike(atIndex: index, with: value)
     }
 }
 
@@ -142,40 +137,27 @@ extension ImagesGalleryViewController: ImageDetailsViewProtocol {
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension ImagesGalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if !likedGalleryElements.isEmpty {
-            return likedGalleryElements.count
-        }
-        return allGalleryElements.count
+        return presenter?.getCellsCount() ?? .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.imageGalleryCell, for: indexPath) as? ImagesGalleryCell else {
             return UICollectionViewCell()
         }
-        if !likedGalleryElements.isEmpty,
-           likedGalleryElements[indexPath.row].isLiked {
-            cell.isLiked = true
-            cell.imageView.image = likedGalleryElements[indexPath.row].image
-        } else {
-            cell.imageView.image = allGalleryElements[indexPath.row].image
-            if allGalleryElements[indexPath.row].isLiked {
-                cell.isLiked = true
-            }
-        }
+        presenter?.configureCell(cell: cell, indexPath: indexPath)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let imagesDetailViewController = ImageDetailsViewController(allGalleryElements: allGalleryElements,
-                                                                    likedGalleryElements: likedGalleryElements,
-                                                                    selectedImageIndexPath: indexPath)
-        imagesDetailViewController.delegate = self
-        navigationController?.pushViewController(imagesDetailViewController, animated: true)
+        if let imagesDetailsVoewController = presenter?.setupDetailsViewController(for: indexPath) {
+            imagesDetailsVoewController.delegate = self
+            navigationController?.pushViewController(imagesDetailsVoewController, animated: true)
+        }
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if contentView.collectionView.isScrolled(),
-           likedGalleryElements.isEmpty == true,
+           presenter?.likedElementsIsEmpty() == true,
            !isDataLoading {
             isDataLoading = true
             pageToload = (pageToload + 1)
