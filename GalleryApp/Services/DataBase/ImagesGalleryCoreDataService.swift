@@ -61,7 +61,7 @@ final class ImagesGalleryCoreDataService: DataProcessing {
         var resultIDs = [String]()
         idToCompare.forEach { id in
             fetchGalleryElement(id: id) { error, entity in
-                if let error = error {
+                if error != nil {
                     completion(nil, CoreDataServiceError.fetchingError)
                 }
                 if let entityId = entity?.id,

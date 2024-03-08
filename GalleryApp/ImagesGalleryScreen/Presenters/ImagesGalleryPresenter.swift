@@ -105,7 +105,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
 
     private func updateLikedElements(with items: [ResponseImageItem], completion: @escaping(CoreDataServiceError?) -> Void) {
         self.getSavedIDsFromDB(for: items, completion: { response, error in
-            if let error = error {
+            if error != nil {
                 debugPrint("dbg: An error occured while fetching saved iDs from Core Data")
                 completion(CoreDataServiceError.fetchingError)
             }
@@ -175,7 +175,7 @@ final class ImagesGalleryPresenter: ImagesGalleryPresenterProtocol {
             loadedImagesIDs.append(item.id)
         }
         self.coreDataService.getLikedImagesIDs(idToCompare: loadedImagesIDs) { result, error in
-            if let error = error {
+            if error != nil {
                 completion(nil, CoreDataServiceError.fetchingError)
             }
             completion(result, nil)
