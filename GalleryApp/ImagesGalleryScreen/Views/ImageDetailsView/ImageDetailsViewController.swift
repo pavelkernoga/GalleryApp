@@ -53,15 +53,6 @@ final class ImageDetailsViewController: UIViewController {
         }
     }
     
-    @objc private func likeButtonTaped(sender: UIButton) {
-        if let indexPath = contentView.collectionView.indexPathsForVisibleItems.first,
-           let cell = contentView.collectionView.cellForItem(at: indexPath) as? ImageDetailsCell {
-            cell.isLiked.toggle()
-            cell.onLikeToggle?(cell.isLiked)
-            delegate?.didUpdateLike(forIndex: indexPath.row, withValue: cell.isLiked)
-        }
-    }
-
     private func configureCell(with elements: [GalleryElement], cell: ImageDetailsCell, indexPath: IndexPath) {
         cell.imageTitleLabel.text = elements[indexPath.row].title
         cell.imageTitleLabel.text?.capitalizeFirstLetter()
@@ -72,6 +63,15 @@ final class ImageDetailsViewController: UIViewController {
             cell.isLiked = true
         }
         cell.likeButton.addTarget(self, action: #selector(likeButtonTaped), for: .touchUpInside)
+    }
+
+    @objc private func likeButtonTaped(sender: UIButton) {
+        if let indexPath = contentView.collectionView.indexPathsForVisibleItems.first,
+           let cell = contentView.collectionView.cellForItem(at: indexPath) as? ImageDetailsCell {
+            cell.isLiked.toggle()
+            cell.onLikeToggle?(cell.isLiked)
+            delegate?.didUpdateLike(forIndex: indexPath.row, withValue: cell.isLiked)
+        }
     }
 }
 
